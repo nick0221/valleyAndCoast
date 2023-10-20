@@ -72,7 +72,7 @@ class CustomerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('#')->rowIndex()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('fullname')
+                Tables\Columns\TextColumn::make('fullname')->label('Name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('gender')
                     ->searchable(),
@@ -113,7 +113,7 @@ class CustomerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ReservationsRelationManager::class
         ];
     }
 

@@ -8,10 +8,13 @@ use App\Models\Staff;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\IconPosition;
+use Filament\Support\Enums\IconSize;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class StaffResource extends Resource
 {
@@ -24,14 +27,20 @@ class StaffResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('')->schema([
+                Forms\Components\Section::make('Register New Staff')
+                    ->description('Note: Fill out all the required(*) fields')
+                    ->icon('heroicon-o-identification')
+                    ->schema([
+
                     Forms\Components\TextInput::make('firstname')
                         ->columnSpan(4)
                         ->required()
+                        ->autocomplete(false)
                         ->maxLength(255),
                     Forms\Components\TextInput::make('lastname')
                         ->columnSpan(4)
                         ->required()
+                        ->autocomplete(false)
                         ->maxLength(255),
 
                     Forms\Components\Radio::make('gender')
@@ -43,12 +52,22 @@ class StaffResource extends Resource
 
                     Forms\Components\TextInput::make('contact')
                         ->columnSpan(4)
+                        ->autocomplete(false)
                         ->maxLength(255),
 
                     Forms\Components\DatePicker::make('dateHired')
                         ->columnSpan(3),
 
+
+                    Forms\Components\DatePicker::make('dateResign')
+                        ->hiddenOn('create')
+                        ->columnSpan(3),
+
+
+
+
                     Forms\Components\Textarea::make('address')
+                        ->autocomplete(false)
                         ->columnSpanFull(),
 
 
@@ -60,9 +79,10 @@ class StaffResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('id', 'DESC')
             ->columns([
 
-                Tables\Columns\TextColumn::make('fullname')
+                Tables\Columns\TextColumn::make('fullname')->label('Name')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('gender')
@@ -99,6 +119,8 @@ class StaffResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+
+                    ExportBulkAction::make()
                 ]),
             ]);
     }

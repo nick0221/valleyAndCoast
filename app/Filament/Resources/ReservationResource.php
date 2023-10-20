@@ -321,14 +321,6 @@ class ReservationResource extends Resource
                     })
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('status')->label('Booking Status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Reserved' => 'warning',
-                        'Confirmed' => 'success',
-                        'Cancelled' => 'danger',
-                    })
-                    ->searchable(),
 
 
                 Tables\Columns\TextColumn::make('status')->label('Booking Status')
@@ -384,6 +376,7 @@ class ReservationResource extends Resource
                         ->openUrlInNewTab()
                         ->outlined()
                         ->icon('heroicon-o-printer'),
+
                     Tables\Actions\ViewAction::make()->label('View more details'),
 
                     Tables\Actions\Action::make('addCharges')

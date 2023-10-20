@@ -1,134 +1,204 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Invoice</title>
-    <style>
-        body, *{
-            font-family: "Calibri Light", sans-serif;
+
+    <style type="text/css">
+        * {
+            font-family: Verdana, Arial, sans-serif;
+        }
+        table{
+            font-size: x-small;
+        }
+        tfoot tr td{
+            font-weight: bold;
+            font-size: x-small;
+        }
+        .gray {
+            background-color: lightgray
         }
 
-        h1 {
-            padding: 0;
-            margin: 0;
-        }
-        h1 span {
-            font: 1rem bold sans-serif;
-            padding: 0;
-            margin: 0;
-
-
-        }
-        .table-bordered {
-            border: 1px solid #ddd !important;
-        }
-
-        table caption {
-            padding: .5em 0;
-        }
-
-        @media screen and (max-width: 767px) {
-            table caption {
-                display: none;
-            }
-        }
-
-        .p {
+        /* Define a fixed position for the footer */
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px; /* Adjust height as needed */
+            background-color: #f0f0f0; /* Background color for the footer */
+            border-top: 1px solid #ccc; /* Optional border at the top of the footer */
             text-align: center;
-            padding-top: 140px;
-
-        }
-        .details{
-            font-size: 14px;
-
-        }
-        .small{
-            font-size: 11px;
-            font-style: italic;
-
+            font-size: 12px;
+            color: grey;
+            line-height: 22px; /* Vertical centering of text */
         }
 
+        /* If you want to center the text within the footer */
+        .fixed-footer p {
+            margin: 0;
+        }
 
-        hr{
-            border: 0;
-            height: 1px;
-            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+        /* Adjust margins for the content above the footer */
+        .content {
+            margin-bottom: 30px; /* Should match the height of the footer */
         }
     </style>
+
 </head>
 <body>
-    <h1>
-        Valley & Coast Hotel
-        <br>
 
-    </h1>
-    <span> Contact: </span> <br>
-    <span> Address: </span>
-
-
-    <hr>
-    <h2>Invoice</h2>
-<p class="details">
-    Invoice number: {{ $data['invoice_number'] }} <br>
-    Booking Reference: {{ $data['bookingReference'] }} <br>
-    Checkin: {{ $data['checkIn'] }}  <br>
-    Check Out:  {{ $data['checkOut'] }} <br>
-    Length of Stay:  {{ $data['calDays'] }} <br>
-    Customer: {{ $data['customer_name'] }} <br>
-
-</p>
-
-<p>
-    <h3>Room Accommodation</h3>
-    <table  width="100%" cellpadding="3" cellspacing="3">
-        <thead>
-            <tr>
-                <th>Room</th>
-                <th>Bed Type</th>
-                <th>Rate</th>
-                <th>With Breakfast</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr class="table-bordered">
-                <td class="table-bordered"> {{ $data['roomNumber'] }} </td>
-                <td class="table-bordered" align="center"> {{ $data['roomType'] }} </td>
-                <td class="table-bordered" align="right"> {{ number_format($data['rate'], 2) }} </td>
-                <td class="table-bordered" align="center"> {{ $data['hasBreakfast'] }} </td>
-            </tr>
-        </tbody>
+<table width="100%">
+    <tr>
+        <td valign="top"><img src="data:image/png;base64,{{ $data['imgLogo'] }}" alt="" width="220"/></td>
+        <td align="right">
+            <h1  >Valley and Coast Hotel</h1>
+            <pre>
+                #6 Intersection Magapit, Lal-lo, Cagayan
+                0921-348-9722 / 0997-552-2319
+                yvonne_yves@yahoo.com
 
 
-    </table>
-        <p>Paid Via: {{ $data['paidThru'] }}</p>
-        <p>
-             Additional Charge:
-        <ul>
-            <?php
-            $sumAddCharge[] = 0
-
-            ?>
-            @foreach($data['additionalCharges'] as $charges)
-                <li>{{ $charges->chargeFor }}  - {{ $charges->chargePrice}}</li>
 
 
-                <?php $sumAddCharge[]  = $charges->chargePrice; ?>
-            @endforeach
+            </pre>
+        </td>
+    </tr>
 
-            @if(array_sum($sumAddCharge) == 0)
-                <span class="small">-No additional charges-</span>
-            @endif
+</table>
 
-        </ul>
-            <hr>
-            <p>Total Additional Charge: {{ (number_format(array_sum($sumAddCharge)) > 0) ? number_format(array_sum($sumAddCharge)) : "" }}</p>
-        </p>
 
-</p>
-    <table width="100%">
+<table  width="100%">
+    <tr>
+        <td width="50%">
+
+            <table>
+                <tr>
+                    <td colspan="2"><strong>Invoice to:</strong></td>
+
+                </tr>
+                <tr><td>Name:</td><td><span>{{ $data['customer_name'] }}</span></td></tr>
+                <tr><td>Addr:</td><td><span>{{ $data['customer_addr'] }}</span></td></tr>
+                <tr><td>Email:</td><td><span>{{ $data['customer_email'] }}</span></td></tr>
+                <tr><td>Contact:</td><td><span>{{ $data['customer_contact'] }}</span></td></tr>
+
+            </table>
+
+        </td>
+        <td>&nbsp;  </td>
+        <td>
+            <table  width="100%" >
+                <tr><td align="">Date:</td><td><span >{{ $data['invoice_date'] }}</span></td></tr>
+                <tr><td align="">Invoice No.:</td><td><span>{{ $data['invoice_number'] }}</span></td></tr>
+                <tr><td align="">Checkin:</td><td>{{ $data['checkInDate'] }}</td></tr>
+                <tr><td align="">Checkout: </td><td>{{ $data['checkOutDate'] }}</td></tr>
+                <tr><td align="">Booking Ref#: </td><td>{{ $data['bookingReference'] }}</td></tr>
+                <tr><td align="">Pay Method: </td><td>{{ $data['paidThru'] }}</td></tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+<br/>
+
+<table width="100%">
+    <thead style="background-color: lightgray;">
+
+    <tr>
+        <th>Service</th>
+        <th>Length of Stay</th>
+        <th>Rate per night</th>
+        <th>Addt'l Charge</th>
+        <th>Total Charge</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Room Charge ({{ $data['roomType'] }})</td>
+        <td align="center">{{ $data['calDays'] }}</td>
+        <td align="right">{{ number_format($data['rate']) }}</td>
+        <td align="right"> </td>
+        <td align="right">{{ number_format($data['ttlChargeAccom']) }}</td>
+
+    </tr>
+    <?php $sumAddCharge[] = 0 ?>
+    @foreach($data['additionalCharges'] as $charges)
+
         <tr>
-            <td align="right"><h3>Total Amt Due: {{ number_format(array_sum($sumAddCharge)+$data['ttlChargeAccom']) }}</h3></td>
+            <td>Addt'l Charge for ({{ $charges->chargeFor }})</td>
+            <td> </td>
+            <td> </td>
+            <td align="right"> {{ number_format($charges->chargePrice) }} </td>
+            <td align="right"> {{ number_format($charges->chargePrice) }} </td>
         </tr>
-    </table>
+
+            <?php $sumAddCharge[]  = $charges->chargePrice; ?>
+
+
+    @endforeach
+    <tr>
+        <td colspan="5" align="center"> <i style="color: #a7a4a4; letter-spacing: 2px;">-- Nothing Follows --</i> </td>
+    </tr>
+
+    </tbody>
+
+    <tfoot>
+    <?php
+        $ttlAmount = (array_sum($sumAddCharge)+$data['ttlChargeAccom']);
+        $vat = ((array_sum($sumAddCharge)+$data['ttlChargeAccom'])*0.12);
+        $subTotal = ($ttlAmount-$vat);
+    ?>
+    <tr>
+        <td colspan="3"></td>
+        <td align="right">Subtotal</td>
+        <td align="right">{{ number_format($subTotal, 2) }}</td>
+    </tr>
+    <tr>
+        <td colspan="3"></td>
+        <td align="right">Vat(12%)</td>
+        <td align="right">{{ number_format($vat, 2) }}</td>
+    </tr>
+    <tr>
+        <td colspan="3"></td>
+        <td align="right">Total</td>
+        <td align="right" class="gray">{{ number_format($ttlAmount, 2) }}</td>
+    </tr>
+    </tfoot>
+</table>
+
+
+<table width="50%" style="color: #a7a4a4">
+    <tr>
+        <td colspan="2"><i>Notes:</i></td>
+    </tr>
+    <tr>
+        <td> </td>
+        <td><span style="padding-left: 10px;">
+                <i>
+                    Hotel charge extra for services like parking & facilities.
+                </i>
+            </span>
+        </td>
+    </tr>
+
+
+</table>
+
+<div class="fixed-footer">
+    "We value your business and hope to continue serving you in the future."
+</div>
 
 </body>
+
+
 </html>
