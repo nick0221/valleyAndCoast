@@ -22,6 +22,7 @@ class StaffFactory extends Factory
             'gender' => $this->faker->randomElement(['Male', 'Female']),
             'contact' => $this->faker->e164PhoneNumber(),
             'address' => $this->faker->address,
+            'designation_id' => $this->faker->numberBetween(1, 30),
             'dateHired' => $this->faker->dateTimeBetween('-10 years', '-5 months')
 
         ];

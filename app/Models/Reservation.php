@@ -108,6 +108,20 @@ class Reservation extends Model
          return (empty($addCharges->sumCharge) || $addCharges->sumCharge == 0) ? null: "₱".number_format($addCharges->sumCharge, 2);
     }
 
+    public function ttlAmtDue($record): ?string
+    {
+        $addCharges = AdditionalCharges::where('reservation_id', $record)
+            ->selectRaw('SUM(chargePrice) AS sumCharge')
+            ->first();
+
+        $accomDue = ReservationAccommodation::where('reservation_id', $record)
+            ->first();
+
+
+        $ttlaAmtDue = ($addCharges->sumCharge+$accomDue->totalAmtDue);
+        return (empty($ttlaAmtDue) || $ttlaAmtDue == 0) ? null: "₱".number_format($ttlaAmtDue, 2);
+    }
+
 
 
     public function getAccommodation(): HasMany

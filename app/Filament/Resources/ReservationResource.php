@@ -55,6 +55,7 @@ class ReservationResource extends Resource
     protected static ?string $recordTitleAttribute = 'tranReference';
     protected static int $globalSearchResultsLimit = 10;
 
+    protected static ?string $pluralLabel = 'Bookings';
 
     public static function form(Form $form): Form
     {
@@ -189,6 +190,7 @@ class ReservationResource extends Resource
 
 
                         Forms\Components\Toggle::make('hasBalcony')
+                            ->hidden()
                             ->columnStart(1)
                             ->inline(false)
                             ->onColor('success')
@@ -199,6 +201,7 @@ class ReservationResource extends Resource
 
                         Forms\Components\Toggle::make('isAirconditioned')
                             ->inline(false)
+                            ->columnStart(1)
                             ->onColor('success')
                             ->onIcon('heroicon-m-check')
                             ->offIcon('heroicon-m-x-mark')
@@ -207,7 +210,7 @@ class ReservationResource extends Resource
                         Forms\Components\Toggle::make('isSmokingAllowed')
                             ->inline(false)
                             ->onColor('success')
-
+                            ->hidden()
                             ->onIcon('heroicon-m-check')
                             ->offIcon('heroicon-m-x-mark')
                             ->disabled(),
@@ -354,9 +357,14 @@ class ReservationResource extends Resource
                         'Voided' => 'Voided',
                     ]),
 
-                DateRangeFilter::make('checkIn')
+                DateRangeFilter::make('checkIn')->label('Check In Guest')
                     ->withIndicator()
-                    ->timezone('UTC')
+                    ->timezone('Asia/Manila')
+                    ->setAutoApplyOption(true),
+
+                DateRangeFilter::make('checkOut')->label('Check Out Guest')
+                    ->withIndicator()
+                    ->timezone('Asia/Manila')
                     ->setAutoApplyOption(true),
 
 
@@ -664,7 +672,7 @@ class ReservationResource extends Resource
                     ->tooltip('See Actions')
 
             ])
-
+            ->emptyStateHeading('No records found.')
             ->bulkActions([
 //                Tables\Actions\BulkActionGroup::make([
 //                    Tables\Actions\DeleteBulkAction::make(),

@@ -3,8 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\StaffResource\Pages;
-use App\Filament\Resources\StaffResource\RelationManagers;
+//use App\Filament\Resources\StaffResource\RelationManagers;
 use App\Models\Staff;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -20,7 +21,8 @@ class StaffResource extends Resource
 {
     protected static ?string $model = Staff::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+
 
 
     public static function form(Form $form): Form
@@ -55,6 +57,32 @@ class StaffResource extends Resource
                         ->autocomplete(false)
                         ->maxLength(255),
 
+
+                    Forms\Components\Select::make('designation')
+                        ->relationship('designation', 'designationTitle')
+                        ->preload()
+                        ->searchable()
+                        ->columnSpan(4)
+                        ->createOptionForm([
+                            Forms\Components\TextInput::make('designationTitle')
+                                ->columnSpanFull()
+                                ->required()
+                                ->maxLength(255),
+
+                        ])
+                        ->createOptionAction(
+                            fn (\Filament\Forms\Components\Actions\Action $action) => $action
+                                ->modalWidth('sm')
+                                ->modalFooterActionsAlignment('end')
+                                ->icon('heroicon-o-plus')
+                                ->tooltip('Create new designation')
+                                ->modalSubmitActionLabel('Save designation')
+                                ->sendSuccessNotification(),
+
+                        )
+                        ->createOptionModalHeading('Create New Designation'),
+
+
                     Forms\Components\DatePicker::make('dateHired')
                         ->columnSpan(3),
 
@@ -83,7 +111,8 @@ class StaffResource extends Resource
             ->columns([
 
                 Tables\Columns\TextColumn::make('fullname')->label('Name')
-                    ->searchable(),
+                    ->description(fn (Staff $record): string => (!empty($record->dateResign)) ? 'Resign last : '.Carbon::parse($record->dateResign)->format('M d,Y').'' : ' ')
+                    ->markdown(),
 
                 Tables\Columns\TextColumn::make('gender')
                     ->searchable(),
@@ -91,9 +120,12 @@ class StaffResource extends Resource
                 Tables\Columns\TextColumn::make('contact')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('dateHired')
-                    ->date()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('contact')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('designation.designationTitle')
+                    ->sortable()
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('dateResign')
                     ->toggleable(isToggledHiddenByDefault: true)

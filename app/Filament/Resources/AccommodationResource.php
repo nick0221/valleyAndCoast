@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AccommodationResource\Pages;
-use App\Filament\Resources\AccommodationResource\RelationManagers;
+//use App\Filament\Resources\AccommodationResource\RelationManagers;
 use App\Models\Accommodation;
 use App\Models\Amenities;
 use Filament\Forms;
@@ -139,8 +139,8 @@ class AccommodationResource extends Resource
 
                 Tables\Columns\ImageColumn::make('image')->label('Img')
                     ->extraImgAttributes(['loading' => 'lazy'])
+                    ->height(160)
                     ->alignCenter()
-
                     ->default(url('images/placeholder.jpg')),
 
                 Tables\Columns\TextColumn::make('roomNumber')->label('Room')

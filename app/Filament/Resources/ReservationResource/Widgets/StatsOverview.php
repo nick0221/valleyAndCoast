@@ -24,13 +24,29 @@ class StatsOverview extends BaseWidget
             ->where('paymentStatus', 'Settled')
             ->count();
 
+        $checkin = Reservation::query()
+            ->whereDate('checkIn', '>=', now())
+            ->where('paymentStatus', 'Pending Payment')
+            ->where('status', 'Confirmed')
+            ->count();
+
+        $checkout = Reservation::query()
+            ->where('paymentStatus', 'Settled')
+            ->where('status', 'Confirmed')
+            ->whereDate('checkOut', '>=', now())
+            ->count();
+
+
 
         return [
-
             Stat::make('Total Records', number_format(Reservation::query()->count()))
                 ->extraAttributes(['class' => 'overlook-card rounded-xl overflow-hidden relative bg-gradient-to-tr from-gray-100 via-white to-white dark:from-gray-950 dark:to-gray-900']),
 
+            Stat::make('Check in', $checkin)
+                ->extraAttributes(['class' => 'overlook-card rounded-xl overflow-hidden relative bg-gradient-to-tr from-gray-100 via-white to-white dark:from-gray-950 dark:to-gray-900']),
 
+            Stat::make('Check Out', $checkout)
+                ->extraAttributes(['class' => 'overlook-card rounded-xl overflow-hidden relative bg-gradient-to-tr from-gray-100 via-white to-white dark:from-gray-950 dark:to-gray-900']),
 
             Stat::make('Booking Confirmed', Reservation::query()
                         ->whereDate('created_at', '=', now())
@@ -39,7 +55,6 @@ class StatsOverview extends BaseWidget
 
             )->description(now()->toFormattedDateString())->color('success')
                 ->extraAttributes(['class' => 'overlook-card rounded-xl overflow-hidden relative bg-gradient-to-tr from-gray-100 via-white to-white dark:from-gray-950 dark:to-gray-900']),
-
 
 
             Stat::make('Settled Payments', number_format($settlePayments))
@@ -68,5 +83,10 @@ class StatsOverview extends BaseWidget
 
 
         ];
+    }
+
+    protected function getColumns():  int
+    {
+        return 4;
     }
 }

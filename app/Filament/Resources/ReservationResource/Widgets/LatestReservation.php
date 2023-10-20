@@ -7,7 +7,6 @@ use App\Filament\Resources\ReservationResource;
 use App\Models\Reservation;
 use Carbon\Carbon;
 
-use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 
@@ -15,12 +14,12 @@ use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 
 
 class LatestReservation extends BaseWidget
 {
-
 
 
     public function table(Table $table): Table
@@ -89,6 +88,13 @@ class LatestReservation extends BaseWidget
                     })
 
                     ->label('Add\'l. Charge'),
+
+                Tables\Columns\TextColumn::make(__('user_id'))
+                    ->alignEnd()
+                    ->formatStateUsing(function(Reservation $r){
+                        return $r->ttlAmtDue($r->id);
+                    })
+                    ->label('Total'),
             ])
             ->headerActions([
                 Action::make('create')->label('Create reservation')
@@ -117,10 +123,6 @@ class LatestReservation extends BaseWidget
                     ->button(),
             ]);
     }
-
-
-
-
 
 
 

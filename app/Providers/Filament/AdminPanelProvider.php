@@ -9,6 +9,7 @@ use App\Filament\Resources\ReservationResource\Widgets\MultiOverview;
 use App\Filament\Resources\ReservationResource\Widgets\ReservationChart;
 use App\Filament\Resources\ReservationResource\Widgets\ReservationOverview;
 use App\Filament\Resources\ReservationResource\Widgets\StatsOverview;
+use App\Filament\Resources\StaffResource;
 use App\Models\Customer;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
@@ -87,14 +88,15 @@ class AdminPanelProvider extends PanelProvider
                         'sm' => 1,
                         'md' => 2,
                         'lg' => 2,
-                        'xl' => 3,
+                        'xl' => 4,
                         '2xl' => null,
                     ])
 
                     ->includes([
                         ReservationResource::class,
                         CustomerResource::class,
-                        AccommodationResource::class
+                        AccommodationResource::class,
+                        StaffResource::class,
 
                     ]),
 

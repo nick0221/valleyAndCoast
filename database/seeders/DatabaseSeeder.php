@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\ItemCategory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +18,8 @@ class DatabaseSeeder extends Seeder
             BedTypeSeeder::class,
             AmenitiesSeeder::class,
             AccommodationSeeder::class,
+            DesignationSeeder::class,
+            ItemCategorySeeder::class,
 
         ]);
 

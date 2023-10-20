@@ -21,6 +21,7 @@ return new class extends Migration
             $table->longText('address')->nullable();
             $table->date('dateHired')->nullable();
             $table->date('dateResign')->nullable();
+            $table->foreignIdFor(\App\Models\Designation::class, 'designation_id')->nullable();
             $table->timestamps();
         });
     }

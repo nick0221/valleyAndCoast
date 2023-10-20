@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class Staff extends Model
@@ -20,11 +21,15 @@ class Staff extends Model
         'address',
         'dateHired',
         'dateResign',
+        'designation_id',
     ];
 
 
 
-
+    public function designation(): BelongsTo
+    {
+        return $this->belongsTo(Designation::class);
+    }
 
 
 

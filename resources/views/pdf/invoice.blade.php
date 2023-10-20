@@ -41,6 +41,33 @@
             margin: 0;
         }
 
+        .signatoryGuest{
+            position: fixed;
+            bottom: 200px;
+
+            left: 30px;
+            height: 30px; /* Adjust height as needed */
+            width: 20%;
+            font-style: italic;
+
+            border-top: 1px solid #ccc; /* Optional border at the top of the footer */
+            text-align: center;
+            font-size: 12px;
+            color: grey;
+            line-height: 22px; /* Vertical centering of text */
+        }
+        .signatoryNotes{
+            position: fixed;
+            bottom: 150px;
+            font-style: italic;
+            right: 30px;
+            height: 30px; /* Adjust height as needed */
+            text-align: justify;
+            font-size: 10px;
+            color: grey;
+            line-height: 22px; /* Vertical centering of text */
+        }
+
         /* Adjust margins for the content above the footer */
         .content {
             margin-bottom: 30px; /* Should match the height of the footer */
@@ -115,7 +142,7 @@
     <thead style="background-color: lightgray;">
 
     <tr>
-        <th>Service</th>
+        <th>Description</th>
         <th>Length of Stay</th>
         <th>Rate per night</th>
         <th>Addt'l Charge</th>
@@ -147,7 +174,7 @@
 
     @endforeach
     <tr>
-        <td colspan="5" align="center"> <i style="color: #a7a4a4; letter-spacing: 2px;">-- Nothing Follows --</i> </td>
+        <td colspan="5" align="center"> <i style="color: #a7a4a4; letter-spacing: 2px;"> </i> </td>
     </tr>
 
     </tbody>
@@ -193,6 +220,20 @@
 
 
 </table>
+
+<div class="signatoryGuest">
+    Guest Signature
+</div>
+
+
+<div class="signatoryNotes">
+    I agree that my liability for this bill is not waived
+    and agree to be held personally liable in the
+    event that the indicated person, company or
+    association fails to pay for any part or the full
+    amount of the these charges.
+</div>
+
 
 <div class="fixed-footer">
     "We value your business and hope to continue serving you in the future."
