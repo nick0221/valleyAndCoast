@@ -7,14 +7,13 @@ use App\Filament\Resources\ReservationResource\Pages;
 use App\Filament\Resources\ReservationResource\RelationManagers;
 use App\Filament\Resources\ReservationResource\Widgets\ReservationOverview;
 use App\Models\Accommodation;
-use App\Models\AdditionalCharges;
+
 use App\Models\BedType;
 use App\Models\PaymentDetails;
 use App\Models\Reservation;
 use App\Models\ReservationAccommodation;
 use Carbon\Carbon;
-use Coolsam\FilamentFlatpickr\Forms\Components\Flatpickr;
-use Filament\Actions\StaticAction;
+
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
@@ -27,9 +26,8 @@ use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 
-use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Support\Enums\ActionSize;
+
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\RawJs;
 use Filament\Tables;
@@ -37,13 +35,12 @@ use Filament\Tables;
 use Filament\Tables\Actions\Modal\Actions\Action;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\Filter;
+
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Http\Request;
-use Malzariey\FilamentDaterangepickerFilter\Fields\DateRangePicker;
+
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 

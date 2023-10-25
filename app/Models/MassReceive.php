@@ -37,6 +37,11 @@ class MassReceive extends Model
     }
 
 
+    public function itemInventory(): HasMany
+    {
+        return $this->hasMany(ReceivedStock::class, 'mass_receive_id');
+    }
+
 
 
 

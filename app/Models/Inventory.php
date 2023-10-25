@@ -40,4 +40,11 @@ class Inventory extends Model
 
 
 
+    public function receivedStock():HasMany
+    {
+        return $this->hasMany(ReceivedStock::class);
+    }
+
+
+
 }

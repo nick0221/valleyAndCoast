@@ -9,9 +9,12 @@ use App\Models\Inventory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn\TextColumnSize;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InventoryResource extends Resource
@@ -22,7 +25,6 @@ class InventoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Manage Inventories';
 
-    protected static ?string $modelLabel = 'Item Information';
 
 
     public static function form(Form $form): Form
@@ -80,13 +82,26 @@ class InventoryResource extends Resource
 
                 Tables\Columns\TextColumn::make('category.categorytitle'),
 
-                Tables\Columns\TextColumn::make('id')
+                Tables\Columns\TextColumn::make('received_stock_sum_qty')
                     ->alignCenter()
                     ->label('Received Stocks')
-                    ->numeric()
-                    ->formatStateUsing(fn (Inventory $record): string =>  $record->countReceived($record->id)),
+                    ->sum('receivedStock', 'qty')
+                    ->weight(FontWeight::Bold),
 
                 Tables\Columns\TextColumn::make('remainingStocks')
+                    ->icon('heroicon-o-arrow-long-down')
+                    ->weight(FontWeight::Bold)
+                    ->color(function ($state){
+                        $color = '';
+                        if ($state === 0){
+                            $color = 'danger';
+                        }elseif ($state <= env('LOW_STOCK_THRESHOLD', 5)){
+                            $color = 'danger';
+                        }else{
+                            $color = 'success';
+                        }
+                        return  $color;
+                    })
                     ->alignCenter()
                     ->numeric(),
 
@@ -100,6 +115,8 @@ class InventoryResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+
+
             ->filters([
                 //
             ])

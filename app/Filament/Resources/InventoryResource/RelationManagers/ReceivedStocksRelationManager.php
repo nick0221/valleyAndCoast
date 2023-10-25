@@ -41,13 +41,13 @@ class ReceivedStocksRelationManager extends RelationManager
             ->recordTitleAttribute('inventory_id')
             ->striped()
             ->columns([
-                Tables\Columns\TextColumn::make('index')->rowIndex(),
+                Tables\Columns\TextColumn::make('index')->rowIndex()->label('#'),
 
                 Tables\Columns\TextColumn::make('created_at')->label('Received Date')
                         ->dateTime('M d, Y - h:i A'),
 
                 Tables\Columns\TextColumn::make('id')
-                    ->label('Received Stocks')
+                    ->label('Ref#')
                     ->formatStateUsing(function (ReceivedStock $record){
                     $tranRef = MassReceive::where('id', $record->mass_receive_id)->first();
 
