@@ -55,7 +55,7 @@ class MassReceiveResource extends Resource
 
                 Forms\Components\Section::make('Item Information')->compact()->schema([
 
-                    Forms\Components\Repeater::make('itemInventory')->hiddenLabel()
+                    Forms\Components\Repeater::make('receivedStock')->hiddenLabel()
                         ->relationship()->schema([
                         Forms\Components\Select::make('inventory_id')
                             ->relationship('itemInfo', 'itemname')
@@ -119,10 +119,20 @@ class MassReceiveResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('voidTran')->label('Void')
+                        ->color('danger')
+                        ->action(function (MassReceive $record){
+                            $record->voidTransaction($record);
+                        })->stickyModalHeader(),
+
+                ])->color('danger')
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+
                 ]),
             ]);
     }

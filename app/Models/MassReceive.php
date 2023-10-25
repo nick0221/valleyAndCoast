@@ -17,6 +17,7 @@ class MassReceive extends Model
         'notes',
         'receivedBy',
         'user_id',
+        'tranStatus',
     ];
 
 
@@ -40,6 +41,17 @@ class MassReceive extends Model
     public function itemInventory(): HasMany
     {
         return $this->hasMany(ReceivedStock::class, 'mass_receive_id');
+    }
+
+
+
+    public function voidTransaction($record):void
+    {
+        $voidRec = MassReceive::find($record->id);
+        dd($voidRec);
+
+
+
     }
 
 

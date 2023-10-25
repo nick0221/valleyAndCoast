@@ -2,33 +2,45 @@
 
 namespace App\Filament\Resources\MassReceiveResource\Pages;
 
-use App\Events\InitialStockAdd;
 use App\Filament\Resources\MassReceiveResource;
 use App\Models\Inventory;
 use App\Models\ReceivedStock;
-use Filament\Actions;
+
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 
 class CreateMassReceive extends CreateRecord
 {
     protected static string $resource = MassReceiveResource::class;
 
-    public function getTitle(): string|Htmlable
-    {
-         return 'Receive Transaction';
-    }
 
     protected function afterCreate(): void
     {
-        ReceivedStock::where('mass_receive_id', $this->getRecord()->id)
-            ->get()
-            ->each(function($item) {
-                Inventory::where('id', $item->inventory_id)->increment('remainingStocks', $item->qty);
-            });
+        $items = ReceivedStock::where('mass_receive_id', $this->getRecord()->id)->get();
+        foreach ($items as $item){
+            DB::table('inventories')
+                ->where('id', '=', $item->inventory_id)
+                ->increment('remainingStocks', $item->qty);
+
+
+        }
+
+//
+//        $massReceiveId = $this->getRecord()->id;
+//        ReceivedStock::where('mass_receive_id', $massReceiveId)->get()->each(function ($item) {
+//            $item->inventory()->increment('remainingStocks', $item->qty);
+//        });
+
 
     }
+
+    public function getTitle(): string|Htmlable
+    {
+        return 'Receive Transaction';
+    }
+
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {

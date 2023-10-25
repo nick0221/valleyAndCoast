@@ -49,18 +49,26 @@ class ListInventories extends ListRecords
     public function getTabs(): array
     {
         $lowStockThreshold = env('LOW_STOCK_THRESHOLD', 5);
+        $outOfStock = Inventory::query()->where('remainingStocks', '<=', 0)->count();
+        $lowSupplies = Inventory::query()->whereBetween('remainingStocks', [1, $lowStockThreshold])->count();
+        $needToSupply = Inventory::query()->whereNull('remainingStocks')->count();
 
         return [
             'all' => Tab::make('All'),
 
             'lowSupplies' => Tab::make('Low Supplies')
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereBetween('remainingStocks', [1, $lowStockThreshold]))
-                ->badge(Inventory::query()->whereBetween('remainingStocks', [1, $lowStockThreshold])->count())
+                ->badge(($lowSupplies === 0) ? '':$lowSupplies)
                 ->badgeColor('danger'),
 
             'outOfStock' => Tab::make('Out of Stock')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('remainingStocks', '<=', 0))
-                ->badge(Inventory::query()->where('remainingStocks', '<=', 0)->count())
+                ->badge(($outOfStock === 0) ? '':$outOfStock)
+                ->badgeColor('danger'),
+
+            'needToSupply' => Tab::make('Need to supply')
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereNull('remainingStocks'))
+                ->badge(($needToSupply === 0) ? '':$needToSupply)
                 ->badgeColor('danger'),
 
 

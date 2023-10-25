@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('tranReference')->nullable();
             $table->string('notes')->nullable();
+            $table->integer('tranStatus')->default(1)->nullable();
             $table->foreignIdFor(\App\Models\Staff::class, 'receivedBy');
             $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->timestamps();
