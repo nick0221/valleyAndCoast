@@ -16,6 +16,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 
 class InventoryResource extends Resource
 {
@@ -59,8 +60,10 @@ class InventoryResource extends Resource
                             ->image()
                             ->columnSpan(2),
 
-                        Forms\Components\TextInput::make('remainingStocks')->label('Initial Stocks')->hint('(Input qty if available)')
+                        Forms\Components\TextInput::make('remainingStocks')->label('Initial Stocks')->hint(new HtmlString('<small class="italic">(Change the qty if available)</small>'))
                             ->hiddenOn('edit')
+                            ->required()
+                            ->default(0)
                             ->columnSpan(2)
                             ->numeric(),
 

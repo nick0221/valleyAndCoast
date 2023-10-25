@@ -66,6 +66,7 @@ class MassReceiveResource extends Resource
                             ->columnSpan(4),
 
                         Forms\Components\TextInput::make('qty')
+                            ->default(1)
                             ->required()
                             ->columnSpan(1),
 
@@ -135,26 +136,31 @@ class MassReceiveResource extends Resource
                Section::make()->schema([
                    TextEntry::make('created_at')
                        ->dateTime('M d, Y - h:i A')
-                       ->label('Date Received'),
+                       ->label('Date Received: '),
 
                    TextEntry::make('staff.fullname')
-                       ->label('Received By'),
+                       ->label('Received By:'),
 
-                   TextEntry::make('notes'),
+                   TextEntry::make('notes')->label('Notes: ')->default('-'),
                ])->columnSpan(1),
 
                 Section::make('Item Information')->schema([
                     RepeatableEntry::make('receivedStock')->hiddenLabel()
-                        ->schema([
+                        ->extraAttributes(['class' => 'samplesample'])
 
+                        ->schema([
                             TextEntry::make('inventory.itemname')->label('Item Name'),
                             TextEntry::make('qty'),
-                            TextEntry::make('tranType'),
+
                             TextEntry::make('remarks')->default('-'),
 
 
 
-                    ])->columnSpanFull()->columns(4)->contained()
+                    ])->columnSpanFull()->columns(3)->contained(),
+
+
+
+
                 ])->columnSpan(4),
             ])->columns(5);
     }
