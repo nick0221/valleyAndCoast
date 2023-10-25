@@ -22,7 +22,7 @@ class ReceivedStocksRelationManager extends RelationManager
 
    protected function getTableHeading(): string|Htmlable|null
    {
-       return 'Received Transaction History';
+       return 'Receive Transaction Logs';
    }
 
     public function form(Form $form): Form

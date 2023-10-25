@@ -6,6 +6,7 @@ use App\Filament\Resources\MassReceiveResource;
 use App\Models\Inventory;
 use App\Models\ReceivedStock;
 
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
@@ -18,20 +19,13 @@ class CreateMassReceive extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $items = ReceivedStock::where('mass_receive_id', $this->getRecord()->id)->get();
-        foreach ($items as $item){
-            DB::table('inventories')
-                ->where('id', '=', $item->inventory_id)
-                ->increment('remainingStocks', $item->qty);
+        //$items = ReceivedStock::where('mass_receive_id', $this->getRecord()->id)->get();
 
+        $massReceiveId = $this->getRecord()->id;
+        ReceivedStock::where('mass_receive_id', $massReceiveId)->get()->each(function ($item) {
 
-        }
-
-//
-//        $massReceiveId = $this->getRecord()->id;
-//        ReceivedStock::where('mass_receive_id', $massReceiveId)->get()->each(function ($item) {
-//            $item->inventory()->increment('remainingStocks', $item->qty);
-//        });
+            Inventory::where('id', $item->inventory_id)->increment('remainingStocks', $item->qty);
+        });
 
 
     }
@@ -46,6 +40,16 @@ class CreateMassReceive extends CreateRecord
     {
         $data['user_id'] = auth()->id();
         return $data;
+    }
+
+
+
+    protected function getCreatedNotification(): ?Notification
+    {
+        return Notification::make()
+            ->success()
+            ->title('Confirmation')
+            ->body('Stocks has been successfully received.');
     }
 
 }

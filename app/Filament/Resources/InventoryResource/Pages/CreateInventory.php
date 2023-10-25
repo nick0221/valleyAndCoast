@@ -37,6 +37,11 @@ class CreateInventory extends CreateRecord
     {
 
         $data['created_by'] = auth()->id();
+
+        if(empty($data['remainingStocks'])){
+            $data['remainingStocks'] = 0;
+        }
+
         return $data;
     }
 
