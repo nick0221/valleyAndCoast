@@ -52,7 +52,8 @@ class LowStockCheckServiceProvider extends ServiceProvider
                     ->duration(10000)
                     ->icon('heroicon-o-archive-box-arrow-down')
                     ->iconColor('danger')
-                    ->sendToDatabase(\App\Models\User::first()) ;
+                    ->sendToDatabase(\App\Models\User::first())
+                    ->send();
             }
 
 
