@@ -30,13 +30,16 @@ class LowStockCheckServiceProvider extends ServiceProvider
 
         if ($lowStockItems->isNotEmpty()) {
             // Check if the notification has already been sent
-            $notif = DB::table('notifications')->where('type', DatabaseNotification::class)->exists();
+            $notif = DB::table('notifications')
+                ->where('type', DatabaseNotification::class)
+                ->whereDate('created_at', '=', now('Asia/Manila')->toDateString())
+                ->exists();
 
             if (!$notif) {
-                $strItem = ($lowStockItems->count() >= 1) ? 'item is': 'items are ';
+                $strItem = ($lowStockItems->count() <= 1) ? 'item is running low': ' items are in short supply';
                 Notification::make()
                     ->title('Stock Level')
-                    ->body($lowStockItems->count()." {$strItem} low stocks, Please check your inventories.")
+                    ->body($lowStockItems->count()." {$strItem}, kindly verify your inventory.")
                     ->actions([
                         \Filament\Notifications\Actions\Action::make('view')->label('View inventories')
                             ->markAsRead()
@@ -46,15 +49,52 @@ class LowStockCheckServiceProvider extends ServiceProvider
                         \Filament\Notifications\Actions\Action::make('markAsRead')
                             ->markAsRead(),
                     ])
-                    ->color('danger')
                     ->duration(10000)
                     ->icon('heroicon-o-archive-box-arrow-down')
                     ->iconColor('danger')
-                    ->sendToDatabase(\App\Models\User::first());
+                    ->sendToDatabase(\App\Models\User::first()) ;
             }
 
 
         }
+
+
+        //Check Out of Stock items
+        $emptyStockItems = Inventory::where('remainingStocks', '<=', 0)->get()->count();
+        if($emptyStockItems > 0){
+
+
+            $notifOutOfStock = DB::table('notifications')
+                ->where('type', DatabaseNotification::class)
+                ->whereDate('created_at', '=', now('Asia/Manila')->toDateString())
+                ->exists();
+
+            if (!$notifOutOfStock) {
+                $strMsg = ($emptyStockItems <= 1) ? "There is {$emptyStockItems} item that is out of stock.": "There are {$emptyStockItems} items are out of stock";
+                Notification::make()
+                    ->title('Out of Stocks')
+                    ->body("{$strMsg}, kindly check your inventory.")
+                    ->actions([
+                        \Filament\Notifications\Actions\Action::make('view')->label('View inventories')
+                            ->markAsRead()
+                            ->button()->outlined()
+                            ->url(fn (): string => url('admin/inventories')),
+
+                        \Filament\Notifications\Actions\Action::make('markAsRead')
+                            ->markAsRead(),
+                    ])
+                    ->duration(10000)
+                    ->icon('heroicon-o-archive-box-arrow-down')
+                    ->iconColor('danger')
+                    ->sendToDatabase(\App\Models\User::first()) ;
+            }
+
+
+
+
+        }
+
+
 
 
 

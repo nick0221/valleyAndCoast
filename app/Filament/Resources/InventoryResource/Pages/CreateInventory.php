@@ -17,17 +17,17 @@ class CreateInventory extends CreateRecord
 
     protected function afterCreate(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        //dd($this->getRecord());
-        $insertInitialStock = new ReceivedStock;
-        $insertInitialStock->inventory_id  = $this->getRecord()->id;
-        $insertInitialStock->qty = $this->getRecord()->remainingStocks;
-        $insertInitialStock->remarks = 'Added Initial qty upon register of the item.';
-        $insertInitialStock->tranType = 'InitialStock';
-        $insertInitialStock->save();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-        //event(new InitialStockAdd($insertInitialStock));
+        if ($this->getRecord()->remainingStocks > 0){
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            //dd($this->getRecord());
+            $insertInitialStock = new ReceivedStock;
+            $insertInitialStock->inventory_id  = $this->getRecord()->id;
+            $insertInitialStock->qty = $this->getRecord()->remainingStocks;
+            $insertInitialStock->remarks = 'Added Initial qty upon register of the item.';
+            $insertInitialStock->tranType = 'InitialStock';
+            $insertInitialStock->save();
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        }
 
 
     }

@@ -62,8 +62,7 @@ class InventoryResource extends Resource
 
                         Forms\Components\TextInput::make('remainingStocks')->label('Initial Stocks')->hint(new HtmlString('<small class="italic">(Change the qty if available)</small>'))
                             ->hiddenOn('edit')
-                            ->required()
-                            ->default(0)
+
                             ->columnSpan(2)
                             ->numeric(),
 
@@ -86,19 +85,28 @@ class InventoryResource extends Resource
                 Tables\Columns\TextColumn::make('category.categorytitle'),
 
                 Tables\Columns\TextColumn::make('received_stock_sum_qty')
+                    ->default('-')
                     ->alignCenter()
                     ->label('Received Stocks')
                     ->sum('receivedStock', 'qty')
                     ->weight(FontWeight::Bold),
 
                 Tables\Columns\TextColumn::make('remainingStocks')
+                    ->default('-')
                     ->weight(FontWeight::Bold)
+                    ->markdown()
+                    ->formatStateUsing(fn($state):string => ($state == 0)?  new  HtmlString('<small>Out of Stock</small>'):$state)
                     ->color(function ($state){
                         $color = '';
                         if ($state === 0){
                             $color = 'danger';
+
                         }elseif ($state <= env('LOW_STOCK_THRESHOLD', 5)){
+                            $color = 'warning';
+
+                        }elseif ($state == 'Out of stock' || empty($state)){
                             $color = 'danger';
+
                         }else{
                             $color = 'success';
                         }
