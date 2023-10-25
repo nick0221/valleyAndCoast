@@ -4,6 +4,7 @@ namespace App\Filament\Resources\MassReceiveResource\Pages;
 
 use App\Events\InitialStockAdd;
 use App\Filament\Resources\MassReceiveResource;
+use App\Models\Inventory;
 use App\Models\ReceivedStock;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
@@ -15,9 +16,11 @@ class CreateMassReceive extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $rcvItem = ReceivedStock::where('mass_receive_id', $this->getRecord()->id)->get();
-
-        event(new InitialStockAdd($rcvItem));
+        ReceivedStock::where('mass_receive_id', $this->getRecord()->id)
+            ->get()
+            ->each(function($item) {
+                Inventory::where('id', $item->inventory_id)->increment('remainingStocks', $item->qty);
+            });
 
     }
 

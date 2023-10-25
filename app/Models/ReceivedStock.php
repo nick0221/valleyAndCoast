@@ -25,6 +25,18 @@ class ReceivedStock extends Model
     }
 
 
+    public function receivedBy($record): void
+    {
+          MassReceive::where('id', $record)->first();
+
+    }
+
+    public function inventory(): BelongsTo
+    {
+        return $this->belongsTo(Inventory::class);
+    }
+
+
 
 
 }

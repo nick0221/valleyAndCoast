@@ -25,10 +25,17 @@ class MassReceive extends Model
         return $this->belongsTo(Staff::class);
     }
 
-    public function itemInventory(): HasMany
+    public function staff():BelongsTo
     {
-        return $this->hasMany(ReceivedStock::class);
+        return $this->belongsTo(Staff::class, 'receivedBy');
     }
+
+
+    public function receivedStock(): HasMany
+    {
+        return $this->hasMany(ReceivedStock::class, 'mass_receive_id');
+    }
+
 
 
 

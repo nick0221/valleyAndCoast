@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\InventoryResource\Pages;
 //use App\Filament\Resources\InventoryResource\RelationManagers;
+use App\Filament\Resources\InventoryResource\RelationManagers\ReceivedStocksRelationManager;
 use App\Models\Inventory;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -21,7 +22,8 @@ class InventoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Manage Inventories';
 
-    protected static ?string $modelLabel = 'Item Info';
+    protected static ?string $modelLabel = 'Item Information';
+
 
     public static function form(Form $form): Form
     {
@@ -56,8 +58,10 @@ class InventoryResource extends Resource
                             ->columnSpan(2),
 
                         Forms\Components\TextInput::make('remainingStocks')->label('Initial Stocks')->hint('(Input qty if available)')
+                            ->hiddenOn('edit')
                             ->columnSpan(2)
                             ->numeric(),
+
 
                 ])->columnSpan(2),
 
@@ -68,12 +72,22 @@ class InventoryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('index')->label('#')
+                    ->rowIndex(),
+
                 Tables\Columns\TextColumn::make('itemname')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('category.categorytitle'),
 
+                Tables\Columns\TextColumn::make('id')
+                    ->alignCenter()
+                    ->label('Received Stocks')
+                    ->numeric()
+                    ->formatStateUsing(fn (Inventory $record): string =>  $record->countReceived($record->id)),
+
                 Tables\Columns\TextColumn::make('remainingStocks')
+                    ->alignCenter()
                     ->numeric(),
 
                 Tables\Columns\TextColumn::make('created_at')
@@ -102,7 +116,7 @@ class InventoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ReceivedStocksRelationManager::class
         ];
     }
 
