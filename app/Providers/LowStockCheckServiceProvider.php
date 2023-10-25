@@ -33,10 +33,10 @@ class LowStockCheckServiceProvider extends ServiceProvider
             $notif = DB::table('notifications')->where('type', DatabaseNotification::class)->exists();
 
             if (!$notif) {
-                $strItem = ($lowStockItems->count() >= 1) ? 'item': 'items';
+                $strItem = ($lowStockItems->count() >= 1) ? 'item is': 'items are ';
                 Notification::make()
                     ->title('Stock Level')
-                    ->body($lowStockItems->count()." {$strItem} are on low stocks, Please check your inventories.")
+                    ->body($lowStockItems->count()." {$strItem} low stocks, Please check your inventories.")
                     ->actions([
                         \Filament\Notifications\Actions\Action::make('view')->label('View inventories')
                             ->markAsRead()

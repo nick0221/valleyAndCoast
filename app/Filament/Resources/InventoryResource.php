@@ -89,7 +89,6 @@ class InventoryResource extends Resource
                     ->weight(FontWeight::Bold),
 
                 Tables\Columns\TextColumn::make('remainingStocks')
-                    ->icon('heroicon-o-arrow-long-down')
                     ->weight(FontWeight::Bold)
                     ->color(function ($state){
                         $color = '';
@@ -102,8 +101,7 @@ class InventoryResource extends Resource
                         }
                         return  $color;
                     })
-                    ->alignCenter()
-                    ->numeric(),
+                    ->alignCenter(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

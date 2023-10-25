@@ -8,11 +8,17 @@ use App\Models\Inventory;
 use App\Models\ReceivedStock;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 
 class CreateMassReceive extends CreateRecord
 {
     protected static string $resource = MassReceiveResource::class;
+
+    public function getTitle(): string|Htmlable
+    {
+         return 'Receive Transaction';
+    }
 
     protected function afterCreate(): void
     {
