@@ -51,7 +51,7 @@ class MassReceive extends Model
 
         $voidRec = MassReceive::find($record->id);
         $voidRec->tranStatus = 0;
-        $voidRec->notes = 'Void';
+        $voidRec->notes = 'Void last '.now()->format('M d, Y - h:ia');
         $voidRec->save();
 
         $receivedStockItem = ReceivedStock::where('mass_receive_id', $record->id)->get();
@@ -60,7 +60,7 @@ class MassReceive extends Model
             Inventory::where('id', $item->inventory_id)->decrement('remainingStocks', $item->qty);
             $item->remarks = 'Void ('.$item->qty.') qty';
             $item->qty = 0;
-            $item->tranType = 'Void';
+            $item->tranType = 'Void last '.now()->format('M d, Y - h:ia');
             $item->save();
 
         }

@@ -20,6 +20,11 @@ class ReceivedStocksRelationManager extends RelationManager
 {
     protected static string $relationship = 'received_stocks';
 
+    public function isReadOnly(): bool
+    {
+        return true;
+    }
+
    protected function getTableHeading(): string|Htmlable|null
    {
        return 'Receive Transaction Logs';

@@ -123,6 +123,7 @@ class MassReceiveResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('notes')->label('Notes/Remarks')
+                    ->default('-')
                     ->searchable(),
 
 
@@ -135,9 +136,10 @@ class MassReceiveResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('voidTran')->label('Void')
+                        ->icon('heroicon-o-archive-box-x-mark')
                         ->hidden(function (MassReceive $record){
                             //Void Transaction
                             if ($record->tranStatus === 0 ){
@@ -152,7 +154,9 @@ class MassReceiveResource extends Resource
                             $record->voidTransaction($record);
                         })->stickyModalHeader(),
 
-                ])->color('danger')
+                    Tables\Actions\ViewAction::make(),
+
+                ])->color('info')
 
             ])
             ->bulkActions([
