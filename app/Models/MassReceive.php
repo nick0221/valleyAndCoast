@@ -19,6 +19,7 @@ class MassReceive extends Model
         'receivedBy',
         'user_id',
         'tranStatus',
+        'supplier_id',
     ];
 
 
@@ -43,6 +44,15 @@ class MassReceive extends Model
     {
         return $this->hasMany(ReceivedStock::class, 'mass_receive_id');
     }
+
+
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+
+
 
 
 
