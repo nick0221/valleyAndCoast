@@ -50,6 +50,14 @@ class MassReceiveResource extends Resource
                         ->preload()
                         ->required(),
 
+
+                    Forms\Components\Select::make('supplier_id')
+                        ->columnSpan(2)
+                        ->relationship('supplier', 'suppName')
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+
                     Forms\Components\Textarea::make('notes')
                         ->columnSpanFull(),
 
@@ -107,6 +115,10 @@ class MassReceiveResource extends Resource
                 Tables\Columns\TextColumn::make('staff.fullname')
                     ->searchable()
                     ->label('Received By'),
+
+                Tables\Columns\TextColumn::make('supplier.suppName')
+                    ->searchable()
+                    ->label('Supplier'),
 
                 Tables\Columns\TextColumn::make('tranStatus')->label('Status')
                     ->badge()
@@ -181,17 +193,19 @@ class MassReceiveResource extends Resource
                    TextEntry::make('staff.fullname')
                        ->label('Received By:'),
 
+                   TextEntry::make('supplier.suppName')
+                       ->label('Supplier:'),
+
                    TextEntry::make('notes')->label('Notes: ')->default('-'),
                ])->columnSpan(1),
 
-                Section::make('Item Information')->schema([
+                Section::make('Item Information')
+                    ->schema([
                     RepeatableEntry::make('receivedStock')->hiddenLabel()
                         ->extraAttributes(['class' => 'samplesample'])
-
                         ->schema([
                             TextEntry::make('inventory.itemname')->label('Item Name'),
                             TextEntry::make('qty'),
-
                             TextEntry::make('remarks')->default('-'),
 
 

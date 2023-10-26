@@ -28,3 +28,5 @@ Route::get('/administrator', function () {
 
 
 Route::get('/generate-pdf/{reference_id}', [\App\Http\Controllers\PDFController::class, 'generatePDF'])->name('print.invoice');
+
+Route::get('/generate-pdf/{reference_id}', [\App\Http\Controllers\AcknowledgmentReceipt::class, 'generatePDF'])->name('print.receipt');
