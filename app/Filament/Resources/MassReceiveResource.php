@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use stdClass;
 
@@ -30,6 +31,8 @@ class MassReceiveResource extends Resource
     protected static ?string $modelLabel = 'Receiving New Stock';
 
     protected static ?string $recordTitleAttribute = 'tranReference';
+
+
 
 
     public static function form(Form $form): Form
@@ -92,8 +95,9 @@ class MassReceiveResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'DESC')
             ->columns([
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('created_at')->label('Date')
                     ->dateTime()
                     ->sortable(),
 
@@ -104,8 +108,21 @@ class MassReceiveResource extends Resource
                     ->searchable()
                     ->label('Received By'),
 
+                Tables\Columns\TextColumn::make('tranStatus')->label('Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        '1' => 'success',
+                        '0' => 'danger',
 
-                Tables\Columns\TextColumn::make('notes')
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        '1' => 'Success',
+                        '0' => 'Void',
+
+                    })
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('notes')->label('Notes/Remarks')
                     ->searchable(),
 
 
@@ -121,6 +138,15 @@ class MassReceiveResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('voidTran')->label('Void')
+                        ->hidden(function (MassReceive $record){
+                            //Void Transaction
+                            if ($record->tranStatus === 0 ){
+                                return true;
+                            }else{
+                                return false;
+
+                            }
+                        })
                         ->color('danger')
                         ->action(function (MassReceive $record){
                             $record->voidTransaction($record);
@@ -130,10 +156,10 @@ class MassReceiveResource extends Resource
 
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-
-                ]),
+//                Tables\Actions\BulkActionGroup::make([
+//                    Tables\Actions\DeleteBulkAction::make(),
+//
+//                ]),
             ]);
     }
 
@@ -192,4 +218,16 @@ class MassReceiveResource extends Resource
             'view' => Pages\ViewReceived::route('/{record}'),
         ];
     }
+
+
+
+    public static function getGlobalSearchResultUrl(Model $record): string
+    {
+        return MassReceiveResource::getUrl('view', ['record' => $record]);
+    }
+
+
+
+
+
 }

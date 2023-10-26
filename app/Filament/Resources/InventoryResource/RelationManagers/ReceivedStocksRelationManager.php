@@ -49,16 +49,15 @@ class ReceivedStocksRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('id')
                     ->label('Ref#')
                     ->formatStateUsing(function (ReceivedStock $record){
-                    $tranRef = MassReceive::where('id', $record->mass_receive_id)->first();
+                        $tranRef = MassReceive::where('id', $record->mass_receive_id)->first();
+                        if($tranRef){
+                            return $tranRef->tranReference;
 
-                    if($tranRef){
-                        return $tranRef->tranReference;
+                        }else{
+                            return '-';
+                        }
 
-                    }else{
-                        return '-';
-                    }
-
-                }),
+                    }),
 
                 Tables\Columns\TextColumn::make('mass_receive_id')->label('Received By')
                     ->formatStateUsing(function ($state){

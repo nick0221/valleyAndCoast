@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,8 +48,42 @@ class MassReceive extends Model
 
     public function voidTransaction($record):void
     {
+
         $voidRec = MassReceive::find($record->id);
-        dd($voidRec);
+        $voidRec->tranStatus = 0;
+        $voidRec->notes = 'Void';
+        $voidRec->save();
+
+        $receivedStockItem = ReceivedStock::where('mass_receive_id', $record->id)->get();
+        foreach ($receivedStockItem as $item){
+
+            Inventory::where('id', $item->inventory_id)->decrement('remainingStocks', $item->qty);
+            $item->remarks = 'Void ('.$item->qty.') qty';
+            $item->qty = 0;
+            $item->tranType = 'Void';
+            $item->save();
+
+        }
+
+        $recipient = auth()->user();
+        Notification::make()
+            ->title('Void Transaction')
+            ->body($voidRec->tranReference.' has been successfully void.')
+            ->actions([
+                \Filament\Notifications\Actions\Action::make('view')->label('View record')
+                    ->button()->outlined()
+                    ->markAsRead()
+                    ->url(fn (): string => route('filament.admin.resources.mass-receives.view', ['record' => $record])),
+
+                \Filament\Notifications\Actions\Action::make('markAsRead')
+                    ->markAsRead(),
+            ])
+            ->icon('heroicon-o-archive-box-x-mark')
+            ->iconColor('danger')
+            ->sendToDatabase($recipient)
+            ->send();
+
+        //dd($receivedStockItem);
 
 
 

@@ -174,9 +174,6 @@ class Reservation extends Model
 
     public function sendSuccessCancelBooking($records): void
     {
-
-
-
         $recipient = auth()->user();
         Notification::make()
             ->title('Booking Cancellation')
