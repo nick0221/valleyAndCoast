@@ -57,12 +57,12 @@ class InventoryResource extends Resource
                 Forms\Components\Fieldset::make()
                     ->schema([
                         Forms\Components\FileUpload::make('image')
+                            ->hidden()
                             ->image()
                             ->columnSpan(2),
 
-                        Forms\Components\TextInput::make('remainingStocks')->label('Initial Stocks')->hint(new HtmlString('<small class="italic">(Change the qty if available)</small>'))
+                        Forms\Components\TextInput::make('remainingStocks')->label('Initial Stocks')->hint(new HtmlString('<small class="italic">(Input qty if available)</small>'))
                             ->hiddenOn('edit')
-
                             ->columnSpan(2)
                             ->numeric(),
 

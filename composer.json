@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "awcodes/filament-versions": "^2.0",
         "awcodes/overlook": "^2.0",
         "blade-ui-kit/blade-ui-kit": "^0.4.0",
         "coolsam/flatpickr": "^3.0",

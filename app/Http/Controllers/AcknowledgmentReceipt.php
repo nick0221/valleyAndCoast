@@ -20,7 +20,7 @@ class AcknowledgmentReceipt extends Controller
             ->leftJoin('staff', 'staff.id', 'mass_receives.receivedBy')
             ->first();
 
-        $supplier = SupplierProfile::find($receiveTran->supplier_id)->first();
+        $supplier = SupplierProfile::where('id', $receiveTran->supplier_id)->first();
         $items = ReceivedStock::where('mass_receive_id', $reference_id)
                 ->leftJoin('inventories', 'inventories.id', 'received_stocks.inventory_id')
                 ->get();

@@ -78,6 +78,7 @@ class MassReceiveResource extends Resource
 
                         Forms\Components\TextInput::make('qty')
                             ->default(1)
+                            ->numeric()
                             ->required()
                             ->columnSpan(1),
 

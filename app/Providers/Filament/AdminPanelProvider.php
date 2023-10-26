@@ -11,6 +11,10 @@ use App\Filament\Resources\ReservationResource\Widgets\ReservationOverview;
 use App\Filament\Resources\ReservationResource\Widgets\StatsOverview;
 use App\Filament\Resources\StaffResource;
 use App\Models\Customer;
+use App\Providers\AppCustomVersionProvider;
+use Awcodes\FilamentVersions\Providers\LaravelVersionProvider;
+use Awcodes\FilamentVersions\Providers\PHPVersionProvider;
+use Awcodes\FilamentVersions\VersionsPlugin;
 use Awcodes\Overlook\OverlookPlugin;
 use Awcodes\Overlook\Widgets\OverlookWidget;
 use Filament\Http\Middleware\Authenticate;
@@ -81,6 +85,15 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugins([
+                VersionsPlugin::make()
+                    ->hasDefaults(false)
+                    ->items([
+                        new AppCustomVersionProvider(),
+                        new LaravelVersionProvider(),
+                        new PHPVersionProvider(),
+                    ]),
+
+
                 OverlookPlugin::make()
 //                    ->sort(1)
                     ->columns([
