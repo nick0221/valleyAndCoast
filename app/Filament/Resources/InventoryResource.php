@@ -54,7 +54,7 @@ class InventoryResource extends Resource
 
                ])->columnSpan(4)->columns(4),
 
-                Forms\Components\Fieldset::make()
+                Forms\Components\Fieldset::make()->hiddenOn('edit')
                     ->schema([
                         Forms\Components\FileUpload::make('image')
                             ->hidden()
@@ -62,7 +62,7 @@ class InventoryResource extends Resource
                             ->columnSpan(2),
 
                         Forms\Components\TextInput::make('remainingStocks')->label('Initial Stocks')->hint(new HtmlString('<small class="italic">(Input qty if available)</small>'))
-                            ->hiddenOn('edit')
+
                             ->columnSpan(2)
                             ->numeric(),
 
@@ -87,8 +87,15 @@ class InventoryResource extends Resource
                 Tables\Columns\TextColumn::make('received_stock_sum_qty')
                     ->default('-')
                     ->alignCenter()
-                    ->label('Received Stocks')
+                    ->label('Received')
                     ->sum('receivedStock', 'qty')
+                    ->weight(FontWeight::Bold),
+
+                Tables\Columns\TextColumn::make('issued_items_sum_issuedQty')
+                    ->default('-')
+                    ->alignCenter()
+                    ->label('Issued')
+                    ->sum('issuedItems', 'issuedQty')
                     ->weight(FontWeight::Bold),
 
                 Tables\Columns\TextColumn::make('remainingStocks')
@@ -113,6 +120,9 @@ class InventoryResource extends Resource
                         return  $color;
                     })
                     ->alignCenter(),
+
+
+
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

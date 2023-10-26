@@ -19,11 +19,9 @@ class CreateMassReceive extends CreateRecord
 
     protected function afterCreate(): void
     {
-        //$items = ReceivedStock::where('mass_receive_id', $this->getRecord()->id)->get();
 
         $massReceiveId = $this->getRecord()->id;
         ReceivedStock::where('mass_receive_id', $massReceiveId)->get()->each(function ($item) {
-
             Inventory::where('id', $item->inventory_id)->increment('remainingStocks', $item->qty);
         });
 

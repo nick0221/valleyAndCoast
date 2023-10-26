@@ -73,6 +73,10 @@ class IssuedTransactionResource extends Resource
                        Inventory::query()->where('id', $state['inventory_id'])->first()->itemname ?? null
                     )
                     ->reorderableWithDragAndDrop(false)->columns(6)->collapsible()->addActionLabel('Add more items')
+                    ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                            $data['tranType'] = 'Issued';
+                            return $data;
+                    })
 
                 ])->columnSpan(4),
 

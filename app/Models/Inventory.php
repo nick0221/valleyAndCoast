@@ -45,6 +45,11 @@ class Inventory extends Model
         return $this->hasMany(ReceivedStock::class);
     }
 
+    public function issuedItems(): HasMany
+    {
+        return $this->hasMany(IssuedItem::class, 'inventory_id');
+    }
+
 
 
 }
