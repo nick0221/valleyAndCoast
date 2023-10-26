@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('tranStatus')->default(1)->nullable();
             $table->foreignIdFor(\App\Models\Staff::class, 'receivedBy');
             $table->foreignIdFor(\App\Models\User::class, 'user_id');
-            $table->foreignIdFor(\App\Models\Supplier::class, 'supplier_id');
+            $table->foreignIdFor(\App\Models\SupplierProfile::class, 'supplier_id');
             $table->timestamps();
         });
     }

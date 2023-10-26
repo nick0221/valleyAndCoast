@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MassReceive;
 use App\Models\ReceivedStock;
 use App\Models\Supplier;
+use App\Models\SupplierProfile;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class AcknowledgmentReceipt extends Controller
             ->leftJoin('staff', 'staff.id', 'mass_receives.receivedBy')
             ->first();
 
-        $supplier = Supplier::find($receiveTran->supplier_id)->first();
+        $supplier = SupplierProfile::find($receiveTran->supplier_id)->first();
         $items = ReceivedStock::where('mass_receive_id', $reference_id)
                 ->leftJoin('inventories', 'inventories.id', 'received_stocks.inventory_id')
                 ->get();

@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
          \App\Models\Customer::factory(10)->create();
          \App\Models\Staff::factory(10)->create();
-         \App\Models\Supplier::factory(10)->create();
+         \App\Models\SupplierProfile::factory(10)->create();
          \App\Models\User::factory()->create([
              'name' => 'DefaultUser',
              'email' => 'default@admin.com',
