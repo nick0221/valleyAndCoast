@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AcknowledgmentReceipt;
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +29,5 @@ Route::get('/administrator', function () {
 });
 
 
-Route::get('/generate-pdf/{reference_id}', [\App\Http\Controllers\PDFController::class, 'generatePDF'])->name('print.invoice');
-
-Route::get('/generate-pdf/{reference_id}', [\App\Http\Controllers\AcknowledgmentReceipt::class, 'generatePDF'])->name('print.receipt');
+Route::get('/generate-pdf/{reference_id}', [PDFController::class, 'generatePDF'])->name('print.invoice');
+Route::get('/generate-receipt/{reference_id}', [AcknowledgmentReceipt::class, 'generatePDF'])->name('print.receipt');

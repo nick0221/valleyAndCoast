@@ -72,6 +72,10 @@
         .content {
             margin-bottom: 30px; /* Should match the height of the footer */
         }
+        .titleHead{
+            text-align: center;
+            color: #8d8d8d;
+        }
     </style>
 
 </head>
@@ -87,15 +91,14 @@
                 0921-348-9722 / 0997-552-2319
                 yvonne_yves@yahoo.com
 
-
-
-
             </pre>
         </td>
     </tr>
 
 </table>
 
+
+<h3 class="titleHead">Acknowledgement Receipt</h3>
 
 <table  width="100%">
     <tr>

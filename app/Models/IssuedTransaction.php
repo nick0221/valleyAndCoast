@@ -25,6 +25,10 @@ class IssuedTransaction extends Model
     {
         return $this->belongsTo(Staff::class);
     }
+    public function careOfBy(): BelongsTo
+    {
+        return $this->belongsTo(Staff::class, 'issuedBy');
+    }
 
 
 

@@ -8,6 +8,7 @@ use App\Models\Inventory;
 use App\Models\MassReceive;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
@@ -29,6 +30,8 @@ class MassReceiveResource extends Resource
     protected static ?string $navigationGroup = 'Manage Inventories';
 
     protected static ?string $modelLabel = 'Receiving New Stock';
+
+    protected static int $globalSearchResultsLimit = 10;
 
     protected static ?string $recordTitleAttribute = 'tranReference';
 
@@ -87,7 +90,7 @@ class MassReceiveResource extends Resource
                     ->itemLabel(fn (array $state): ?string =>
                         Inventory::query()->where('id', $state['inventory_id'])->first()->itemname ?? null
                     )
-                    ->reorderableWithDragAndDrop(false)->columns(6)->collapsible(true)->addActionLabel('Add more item to receive')
+                    ->reorderableWithDragAndDrop(false)->columns(6)->collapsible()->addActionLabel('Add more item to receive')
                     ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                         $data['tranType'] = 'Receive';
                         return $data;
@@ -106,6 +109,8 @@ class MassReceiveResource extends Resource
         return $table
             ->defaultSort('created_at', 'DESC')
             ->columns([
+                Tables\Columns\TextColumn::make('index')->rowIndex()->label('#'),
+
                 Tables\Columns\TextColumn::make('created_at')->label('Date')
                     ->dateTime()
                     ->sortable(),
@@ -186,7 +191,7 @@ class MassReceiveResource extends Resource
         return $infolist
 
             ->schema([
-               Section::make()->schema([
+               Fieldset::make('')->schema([
                    TextEntry::make('created_at')
                        ->dateTime('M d, Y - h:i A')
                        ->label('Date Received: '),
@@ -198,12 +203,11 @@ class MassReceiveResource extends Resource
                        ->label('Supplier:'),
 
                    TextEntry::make('notes')->label('Notes: ')->default('-'),
-               ])->columnSpan(1),
+               ])->columnSpan(1)->columns(1),
 
                 Section::make('Item Information')
                     ->schema([
                     RepeatableEntry::make('receivedStock')->hiddenLabel()
-                        ->extraAttributes(['class' => 'samplesample'])
                         ->schema([
                             TextEntry::make('inventory.itemname')->label('Item Name'),
                             TextEntry::make('qty'),

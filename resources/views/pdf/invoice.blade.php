@@ -72,6 +72,11 @@
         .content {
             margin-bottom: 30px; /* Should match the height of the footer */
         }
+
+        .titleHead{
+            text-align: left;
+            color: #707070;
+        }
     </style>
 
 </head>
@@ -86,10 +91,6 @@
                 #6 Intersection Magapit, Lal-lo, Cagayan
                 0921-348-9722 / 0997-552-2319
                 yvonne_yves@yahoo.com
-
-
-
-
             </pre>
         </td>
     </tr>
@@ -99,9 +100,15 @@
 
 <table  width="100%">
     <tr>
+        <td>
+            <h1 CLASS="titleHead">INVOICE</h1>
+        </td>
+    </tr>
+    <tr>
         <td width="50%">
 
             <table>
+
                 <tr>
                     <td colspan="2"><strong>Invoice to:</strong></td>
 
