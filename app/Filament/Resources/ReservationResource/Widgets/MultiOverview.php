@@ -15,6 +15,7 @@ class MultiOverview extends MultiWidget
 
     ];
 
+
     public function shouldPersistMultiWidgetTabsInSession(): bool
     {
         return true;

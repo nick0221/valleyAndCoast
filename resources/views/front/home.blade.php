@@ -38,7 +38,7 @@
                 <div class="col-md-12">
                     <div class="section-heading">
                         <h2>Featured Accommodation</h2>
-                        <a href="#">view more <i class="fa fa-angle-right"></i></a>
+                        <a href="{{ route('view.list.accommodation') }}">view more <i class="fa fa-angle-right"></i></a>
                     </div>
                 </div>
                 @php($i = 1)
