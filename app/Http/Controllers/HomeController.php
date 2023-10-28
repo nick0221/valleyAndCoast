@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Accommodation;
 use App\Models\Amenities;
+use App\Models\Inquiry;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -74,6 +75,22 @@ class HomeController extends Controller
 
     }
 
+
+
+
+    public static function inquiries(Request $request)
+    {
+
+        $inquiry = new  Inquiry();
+        $inquiry->name = $request->name;
+        $inquiry->email = $request->email;
+        $inquiry->subject = $request->subject;
+        $inquiry->msg = $request->message;
+        $inquiry->save();
+
+        return redirect(route('thanks.message'));
+
+    }
 
 
 }

@@ -31,6 +31,12 @@ Route::get('/administrator', function () {
 
 Route::get('/view-accommodation/{id}', [HomeController::class, 'view'])->name('view.accommodation');
 Route::get('/accommodations', [HomeController::class, 'accommodationList'])->name('view.list.accommodation');
+Route::post('/inquiries', [HomeController::class, 'inquiries'])->name('send.inquiries');
+
+
+Route::get('/thank-you', function () {
+    return view('front.thank-you');
+})->name('thanks.message');
 
 
 

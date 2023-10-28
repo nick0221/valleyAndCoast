@@ -68,7 +68,8 @@
                 </div>
                 <div class="col-md-8">
                     <div class="contact-form">
-                        <form id="contact" action="" method="post">
+                        <form id="contact" action="{{ route('send.inquiries') }}" method="post">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <fieldset>
@@ -77,7 +78,7 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <fieldset>
-                                        <input name="email" type="text" class="form-control" id="email" placeholder="E-Mail Address" required="">
+                                        <input name="email" type="email" class="form-control" id="email" placeholder="E-Mail Address" required="">
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">

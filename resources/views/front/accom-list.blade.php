@@ -46,7 +46,7 @@
                                 </p>
                                 <div class="text-right d-flex align-content-around">
                                      <a href="{{ route('view.accommodation', $item->accomId) }}" class="btn btn-link btn-block">View more details</a>
-                                     <button class="btn btn-danger btn-block">Book</button>
+                                     <button class="btn btn-danger btn-block">Reserve</button>
                                 </div>
                             </div>
                         </div>

@@ -12,21 +12,21 @@
                 <div class="text-content">
                     <h4>Find your accommodation today!</h4>
                     <h2>Lorem ipsum dolor sit amet</h2>
-                    <button class="btn btn-danger btn-lg">Book now</button>
+
                 </div>
             </div>
             <div class="banner-item-02">
                 <div class="text-content">
                     <h4>Find your accommodation today!</h4>
                     <h2>Laboriosam reprehenderit ducimus</h2>
-                    <button class="btn btn-danger btn-lg">Book now</button>
+
                 </div>
             </div>
             <div class="banner-item-03">
                 <div class="text-content">
                     <h4>Find your accommodation today!</h4>
                     <h2>Quaerat suscipit unde minus dicta</h2>
-                    <button class="btn btn-danger btn-lg">Book now</button>
+
                 </div>
             </div>
         </div>
