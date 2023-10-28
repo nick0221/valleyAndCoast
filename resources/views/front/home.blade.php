@@ -47,7 +47,7 @@
                     <div class="product-item">
                         <a href="{{ route('view.accommodation', $items->accomId) }}"><img src="{{ (empty($items->image)) ? asset('images/placeholder.jpg'): asset('storage/'.$items->image) }}" alt="Hotel Image"></a>
                         <div class="down-content">
-                            <a href="#"><h4>{{ $items->roomNumber }}</h4></a>
+                            <a href="{{ route('view.accommodation', $items->accomId) }}"><h4>{{ $items->roomNumber }}</h4></a>
 
                             <h6> &#x20B1; {{ number_format($items->pricePerNight) }} <small> Rate per night</small></h6>
 
@@ -60,7 +60,7 @@
                                </p>
 
                             <small>
-                                <strong title="Click for more details"><a class="btn btn-outline-primary btn-sm">View more details</a> </strong>
+                                <strong title="Click for more details"><a href="{{ route('view.accommodation', $items->accomId) }}" class="btn btn-outline-primary btn-sm">View more details</a> </strong>
                             </small>
                         </div>
                     </div>

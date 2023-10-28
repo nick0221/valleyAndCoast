@@ -56,6 +56,23 @@ class HomeController extends Controller
 
 
 
+    public static function accommodationList()
+    {
+        $details = Accommodation::selectRaw('
+                bed_types.title AS bedTypeTitle,
+                accommodations.id AS accomId,
+                image, pricePerNight, description, roomNumber, amenities, maxOccupancy, roomSize, isAirconditioned
+
+              ')
+            ->leftJoin('bed_types', 'bed_types.id', 'accommodations.bed_type_id')
+            ->orderByDesc('accommodations.created_at')
+            ->paginate(6);
+//        dd($details);
+
+        return view('front.accom-list', compact('details'));
+
+
+    }
 
 
 

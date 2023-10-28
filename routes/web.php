@@ -30,6 +30,9 @@ Route::get('/administrator', function () {
 });
 
 Route::get('/view-accommodation/{id}', [HomeController::class, 'view'])->name('view.accommodation');
+Route::get('/accommodations', [HomeController::class, 'accommodationList'])->name('view.list.accommodation');
+
+
 
 Route::get('/generate-pdf/{reference_id}', [PDFController::class, 'generatePDF'])->name('print.invoice');
 Route::get('/generate-receipt/{reference_id}', [AcknowledgmentReceipt::class, 'generatePDF'])->name('print.receipt');

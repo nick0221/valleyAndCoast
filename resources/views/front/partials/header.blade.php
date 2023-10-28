@@ -17,7 +17,7 @@
                     </li>
 
 
-                    <li class="nav-item"><a class="nav-link " href="#">Accommodations</a></li>
+                    <li class="nav-item"><a class="nav-link " href="{{ route('view.list.accommodation') }}">Accommodations</a></li>
 
 {{--                    <li class="nav-item dropdown">--}}
 {{--                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>--}}
