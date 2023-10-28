@@ -24,7 +24,7 @@ class CreateIssuedTransaction extends CreateRecord
         $issuedTransaction = $this->getRecord()->id;
 
         IssuedItem::where('issued_transaction_id', $issuedTransaction)->get()->each(function ($item) {
-            Inventory::where('id', $item->inventory_id)->decrement('remainingStocks', $item->issuedQty);
+            Inventory::where('id', $item->inventory_id)->decrement('remainingStocks', $item->qty);
         });
 
 

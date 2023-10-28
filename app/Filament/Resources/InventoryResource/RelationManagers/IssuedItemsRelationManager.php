@@ -2,42 +2,28 @@
 
 namespace App\Filament\Resources\InventoryResource\RelationManagers;
 
-use App\Models\Inventory;
+use App\Models\IssuedItem;
+use App\Models\IssuedTransaction;
 use App\Models\MassReceive;
-use App\Models\ReceivedStock;
 use App\Models\Staff;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ReceivedStocksRelationManager extends RelationManager
+class IssuedItemsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'received_stocks';
-
-    public function isReadOnly(): bool
-    {
-        return true;
-    }
-
-   protected function getTableHeading(): string|Htmlable|null
-   {
-       return 'Receive Transaction Logs';
-   }
+    protected static string $relationship = 'issued_items';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('inventory_id')
-                    ->required()
-                    ->maxLength(255),
+
             ]);
     }
 
@@ -45,34 +31,34 @@ class ReceivedStocksRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('inventory_id')
-            ->striped()
             ->columns([
                 Tables\Columns\TextColumn::make('index')->rowIndex()->label('#'),
-
-                Tables\Columns\TextColumn::make('created_at')->label('Received Date')
-                        ->dateTime('M d, Y - h:i A'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime('M d, Y - h:ia'),
 
                 Tables\Columns\TextColumn::make('id')
-                    ->label('Ref#')
-                    ->markdown()
+                    ->url(fn (Model $record): string => route('filament.admin.resources.issued-transactions.view', $record))
                     ->tooltip('Click to view transaction details')
-                    ->formatStateUsing(function (ReceivedStock $record){
-                        $tranRef = MassReceive::where('id', $record->mass_receive_id)->first();
+                    ->openUrlInNewTab()
+                    ->label('Ref#')
+                    ->formatStateUsing(function (IssuedItem $record){
+                        $tranRef = IssuedTransaction::where('id', $record->issued_transaction_id)->first();
                         if($tranRef){
-                            return '<a href="'.route('filament.admin.resources.mass-receives.view', $record->mass_receive_id).'" target="_blank">'.$tranRef->tranReference.'</a>';
+                            return $tranRef->tranReference;
 
                         }else{
                             return '-';
                         }
 
                     }),
+                Tables\Columns\TextColumn::make('inventory.itemname')->label('Item Name'),
 
-                Tables\Columns\TextColumn::make('mass_receive_id')->label('Received By')
+                Tables\Columns\TextColumn::make('issued_transaction_id')->label('CareOf By')
                     ->formatStateUsing(function ($state){
-                        $rcvBy = MassReceive::where('id', $state)->first();
+                        $issueTran = IssuedTransaction::where('id', $state)->first();
 
-                        if($rcvBy){
-                            $staff = Staff::where('id', $rcvBy->receivedBy)->first();
+                        if($issueTran){
+                            $staff = Staff::where('id', $issueTran->issuedBy)->first();
                             return $staff->fullname;
 
                         }else{
@@ -80,15 +66,14 @@ class ReceivedStocksRelationManager extends RelationManager
                         }
 
                     }),
-
-                Tables\Columns\TextColumn::make('tranType')->label('Transaction Type')->badge(),
                 Tables\Columns\TextColumn::make('qty'),
+                Tables\Columns\TextColumn::make('tranType')->badge()->label('Transaction Type'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
 //                Tables\Actions\EditAction::make(),

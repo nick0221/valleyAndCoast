@@ -17,6 +17,7 @@ class Inventory extends Model
         'category_id',
         'remainingStocks',
         'image',
+        'unit',
     ];
 
 
@@ -45,9 +46,15 @@ class Inventory extends Model
         return $this->hasMany(ReceivedStock::class);
     }
 
-    public function issuedItems(): HasMany
+    public function issuedItem(): HasMany
     {
-        return $this->hasMany(IssuedItem::class, 'inventory_id');
+        return $this->hasMany(IssuedItem::class);
+    }
+
+
+    public function issued_items(): HasMany
+    {
+        return $this->hasMany(IssuedItem::class);
     }
 
 

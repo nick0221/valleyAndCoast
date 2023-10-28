@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\ItemCategory::class, 'category_id')->nullable();
             $table->bigInteger('remainingStocks')->nullable();
             $table->string('image')->nullable();
+            $table->string('unit')->nullable();
             $table->foreignIdFor(\App\Models\User::class, 'created_by')->nullable();
             $table->foreignIdFor(\App\Models\User::class, 'last_edited_by')->nullable();
             $table->timestamps();

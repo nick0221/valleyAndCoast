@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\InventoryResource\Pages;
 //use App\Filament\Resources\InventoryResource\RelationManagers;
+use App\Filament\Resources\InventoryResource\RelationManagers\IssuedItemsRelationManager;
 use App\Filament\Resources\InventoryResource\RelationManagers\ReceivedStocksRelationManager;
 use App\Models\Inventory;
 use Filament\Forms;
@@ -38,6 +39,12 @@ class InventoryResource extends Resource
                        ->required()
                        ->maxLength(255),
 
+                   Forms\Components\TextInput::make('unit')->label('Unit')
+                       ->columnSpan(1)
+                       ->required()
+                       ->maxLength(255),
+
+
                    Forms\Components\Select::make('category_id')
                        ->relationship('category', 'categorytitle')
                        ->searchable()
@@ -52,7 +59,7 @@ class InventoryResource extends Resource
 
 
 
-               ])->columnSpan(4)->columns(4),
+               ])->columnSpan(4)->columns(5),
 
                 Forms\Components\Fieldset::make()->hiddenOn('edit')
                     ->schema([
@@ -75,11 +82,15 @@ class InventoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+
             ->columns([
                 Tables\Columns\TextColumn::make('index')->label('#')
                     ->rowIndex(),
 
                 Tables\Columns\TextColumn::make('itemname')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('unit')->label('Item Per Unit')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('category.categorytitle'),
@@ -91,11 +102,11 @@ class InventoryResource extends Resource
                     ->sum('receivedStock', 'qty')
                     ->weight(FontWeight::Bold),
 
-                Tables\Columns\TextColumn::make('issued_items_sum_issuedQty')
+                Tables\Columns\TextColumn::make('issued_item_sum_qty')
                     ->default('-')
                     ->alignCenter()
                     ->label('Issued')
-                    ->sum('issuedItems', 'issuedQty')
+                    ->sum('issuedItem', 'qty')
                     ->weight(FontWeight::Bold),
 
                 Tables\Columns\TextColumn::make('remainingStocks')
@@ -152,7 +163,9 @@ class InventoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ReceivedStocksRelationManager::class
+            ReceivedStocksRelationManager::class,
+            IssuedItemsRelationManager::class
+
         ];
     }
 
@@ -164,4 +177,13 @@ class InventoryResource extends Resource
             'edit' => Pages\EditInventory::route('/{record}/edit'),
         ];
     }
+
+
+
+
+
+
+
+
+
 }

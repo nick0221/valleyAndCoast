@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('inventory_id')->references('id')->on('inventories')->cascadeOnDelete();
             $table->foreignId('issued_transaction_id')->references('id')->on('issued_transactions')->cascadeOnDelete();
-            $table->bigInteger('issuedQty');
+            $table->bigInteger('qty');
             $table->string('tranType')->nullable();
 
             $table->timestamps();

@@ -46,7 +46,7 @@ class IssuedTransactionResource extends Resource
 
                         ->required(),
 
-                    Forms\Components\Textarea::make('notes')
+                    Forms\Components\Textarea::make('notes')->label('Notes/Remarks')
                         ->rows(5)
                         ->maxLength(255),
                 ])->columnSpan(2)->columns(1),
@@ -64,7 +64,8 @@ class IssuedTransactionResource extends Resource
                             ->live()
                             ->preload(),
 
-                        Forms\Components\TextInput::make('issuedQty')->label('Qty')
+                        Forms\Components\TextInput::make('qty')->label('Qty')
+                            ->required()
                             ->numeric()
                             ->columnSpan(2),
 
@@ -118,12 +119,6 @@ class IssuedTransactionResource extends Resource
                     ->searchable(),
 
 
-
-
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -158,7 +153,7 @@ class IssuedTransactionResource extends Resource
                 Section::make('')->schema([
                     RepeatableEntry::make('issuedItems')->label('Item Information')->schema([
                         TextEntry::make('inventory.itemname')->label('Item Name'),
-                        TextEntry::make('issuedQty'),
+                        TextEntry::make('qty'),
                     ])->columns(2)
 
                 ])->columnSpan(4),

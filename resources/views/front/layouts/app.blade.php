@@ -18,7 +18,9 @@
     <link rel="stylesheet" href="{{ asset('template/assets/css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('template/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('template/assets/css/owl.css') }}">
+    <style>
 
+    </style>
 </head>
 <body>
 

@@ -138,7 +138,8 @@
     <tr>
         <th width="7%" align="center">#</th>
         <th width="80%">Description</th>
-        <th width="25%" align="center">Qty</th>
+        <th width="14%">Unit</th>
+        <th width="15%" align="center">Qty</th>
 
     </tr>
     </thead>
@@ -149,6 +150,7 @@
         <tr>
             <td align="center">{{ $i }}</td>
             <td>{{ $item->itemname }}</td>
+            <td align="center">{{ $item->unit }}</td>
             <td align="center">{{ $item->qty }}</td>
 
 

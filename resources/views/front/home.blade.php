@@ -32,8 +32,6 @@
         </div>
     </div>
     <!-- Banner Ends Here -->
-
-
     <div class="latest-products">
         <div class="container">
             <div class="row">
@@ -43,56 +41,38 @@
                         <a href="#">view more <i class="fa fa-angle-right"></i></a>
                     </div>
                 </div>
+                @php($i = 1)
+                @foreach($accommodation as $items)
                 <div class="col-md-4">
                     <div class="product-item">
-                        <a href="vacation-details.html"><img src="{{ asset('template/assets/images/product-1-370x270.jpg') }}" alt=""></a>
+                        <a href="{{ route('view.accommodation', $items->accomId) }}"><img src="{{ (empty($items->image)) ? asset('images/placeholder.jpg'): asset('storage/'.$items->image) }}" alt="Hotel Image"></a>
                         <div class="down-content">
-                            <a href="vacation-details.html"><h4>Limelight Lodge</h4></a>
+                            <a href="#"><h4>{{ $items->roomNumber }}</h4></a>
 
-                            <h6>$300 - $400</h6>
+                            <h6> &#x20B1; {{ number_format($items->pricePerNight) }} <small> Rate per night</small></h6>
 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum incidunt, aperiam nostrum et. Voluptas vel labore numqua.</p>
+                               <p>
+                                    <h6>Description</h6>
+                                    <p style="text-align: justify;" >
+                                        {{ $items->description }}
+                                    </p>
+
+                               </p>
 
                             <small>
-                                <strong title="Available"><i class="fa fa-map-marker"></i> 6 Regeneration Road, SE16 2NX, London</strong>
+                                <strong title="Click for more details"><a class="btn btn-outline-primary btn-sm">View more details</a> </strong>
                             </small>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="product-item">
-                        <a href="vacation-details.html"><img src="{{ asset('template/assets/images/product-2-370x270.jpg') }}" alt=""></a>
-                        <div class="down-content">
-                            <a href="vacation-details.html"><h4>Limelight Lodge</h4></a>
+                        @break($i === 3)
+                    @php($i++)
+                @endforeach
 
-                            <h6>$300 - $400</h6>
 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum incidunt, aperiam nostrum et. Voluptas vel labore numqua.</p>
 
-                            <small>
-                                <strong title="Available"><i class="fa fa-map-marker"></i> 6 Regeneration Road, SE16 2NX, London</strong>
-                            </small>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="product-item">
-                        <a href="vacation-details.html"><img src="{{ asset('template/assets/images/product-3-370x270.jpg') }}" alt=""></a>
-                        <div class="down-content">
-                            <a href="vacation-details.html"><h4>Limelight Lodge</h4></a>
-
-                            <h6>$300 - $400</h6>
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum incidunt, aperiam nostrum et. Voluptas vel labore numqua.</p>
-
-                            <small>
-                                <strong title="Available"><i class="fa fa-map-marker"></i> 6 Regeneration Road, SE16 2NX, London</strong>
-                            </small>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -29,7 +29,7 @@
 {{--                    </li>--}}
 
                     <li class="nav-item {{ (request()->route()->getName() === 'contactUs')? 'active': null }}"><a class="nav-link " href="{{ route('contactUs') }}">Contact Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+
 
                 </ul>
             </div>

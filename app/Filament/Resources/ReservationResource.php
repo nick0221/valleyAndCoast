@@ -185,7 +185,6 @@ class ReservationResource extends Resource
                             ->numeric('2', '.', ',')
                             ->readOnly(),
 
-
                         Forms\Components\Toggle::make('hasBalcony')
                             ->hidden()
                             ->columnStart(1)

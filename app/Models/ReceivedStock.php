@@ -39,4 +39,5 @@ class ReceivedStock extends Model
 
 
 
+
 }

@@ -14,7 +14,7 @@ class IssuedItem extends Model
     protected $fillable = [
         'inventory_id',
         'issued_transaction_id',
-        'issuedQty',
+        'qty',
         'tranType',
     ];
 

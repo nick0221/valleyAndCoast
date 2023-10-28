@@ -8,6 +8,8 @@ use Filament\Actions;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 use pxlrbt\FilamentExcel\Columns\Column;
@@ -29,20 +31,17 @@ class ListInventories extends ListRecords
 
                     ExcelExport::make()->fromTable()
                         ->withColumns([
-//                            Column::make('id')
-//                                ->heading('Received Stocks')
-//                                ->formatStateUsing(fn (Inventory $record):int =>  $record->countReceived($record->id)),
+                            Column::make('remainingStocks')
+                                ->heading('Remaining Stocks')
+                                ->formatStateUsing(fn ($state):int => ($state == 0 || !is_int($state)) ? 0 : $state),
 
 
                         ])
                         ->except('updated_at' , 'index')
-                        ->withFilename(fn () => 'InventoryRecords-'.now()->toDateString())
+                        ->withFilename(fn () => 'InventoryReport as of '.now()->toDateString())
                 ])
         ];
     }
-
-
-
 
 
 
