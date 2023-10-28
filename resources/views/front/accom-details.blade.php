@@ -32,11 +32,12 @@
 
                 <div class="col-md-6">
 
-                        <p class="lead ">
-                            <h1> {{ strtoupper($details->roomNumber) }} </h1>
+                        <p class="lead">
+                            <h1>
+                                {{ strtoupper($details->roomNumber) }}
+                            </h1>
                         </p>
 
-                        <p</p>
 
                         <div class="section">
                             <div class="container">
