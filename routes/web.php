@@ -29,14 +29,21 @@ Route::get('/administrator', function () {
     return redirect(url('/admin'));
 });
 
-Route::get('/view-accommodation/{id}', [HomeController::class, 'view'])->name('view.accommodation');
-Route::get('/accommodations', [HomeController::class, 'accommodationList'])->name('view.list.accommodation');
-Route::post('/inquiries', [HomeController::class, 'inquiries'])->name('send.inquiries');
-
-
 Route::get('/thank-you', function () {
     return view('front.thank-you');
 })->name('thanks.message');
+
+Route::get('/reserve-success', function () {
+    return view('front.reserve-success');
+})->name('reserve.success');
+
+
+Route::get('/view-accommodation/{id}', [HomeController::class, 'view'])->name('view.accommodation');
+Route::get('/accommodations', [HomeController::class, 'accommodationList'])->name('view.list.accommodation');
+Route::post('/inquiries', [HomeController::class, 'inquiries'])->name('send.inquiries');
+Route::post('/reserve-accommodation/{accom_id}', [HomeController::class, 'reserve'])->name('reserve.accom');
+Route::post('/customer-reserve', [HomeController::class, 'customerReserve'])->name('reserve.submit');
+
 
 
 

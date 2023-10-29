@@ -43,7 +43,9 @@
                     <div class="left-content">
                         <h4>About our office</h4>
                         <p>
-                            -
+                            Address: #6 Intersection Magapit, Lal-lo, Cagayan <br>
+                            Contact: 0921-348-9722 / 0997-552-2319 <br>
+                            Email: yvonne_yves@yahoo.com <br>
                         </p>
                         <ul class="social-icons">
                             <li><a target="_blank" href="https://www.facebook.com/pages/Valley-and-Coast-Hotel-Magapit/1944862055739783"><i class="fa fa-facebook"></i></a></li>

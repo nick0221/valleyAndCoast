@@ -7,6 +7,7 @@ use App\Filament\Resources\InquiryResource\RelationManagers;
 use App\Models\Inquiry;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
@@ -86,7 +87,9 @@ class InquiryResource extends Resource
                 TextEntry::make('name'),
                 TextEntry::make('email'),
                 TextEntry::make('subject'),
-                TextEntry::make('msg')->label('Message')->columnSpanFull(),
+                Fieldset::make('Message')->schema([
+                    TextEntry::make('msg')->hiddenLabel()->columnSpanFull()
+                ]),
             ])->columns(3);
 
     }

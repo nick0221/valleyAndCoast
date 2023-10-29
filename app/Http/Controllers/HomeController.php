@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Accommodation;
 use App\Models\Amenities;
+use App\Models\CustomerReservation;
 use App\Models\Inquiry;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -68,7 +69,7 @@ class HomeController extends Controller
             ->leftJoin('bed_types', 'bed_types.id', 'accommodations.bed_type_id')
             ->orderByDesc('accommodations.created_at')
             ->paginate(6);
-//        dd($details);
+        //dd($details);
 
         return view('front.accom-list', compact('details'));
 
@@ -91,6 +92,60 @@ class HomeController extends Controller
         return redirect(route('thanks.message'));
 
     }
+
+
+
+    public static function reserve(Request $request)
+    {
+        $accomId = $request->accom_id;
+
+        $details = Accommodation::where('accommodations.id', '=', $accomId)
+            ->leftJoin('bed_types', 'bed_types.id', 'accommodations.bed_type_id')
+            ->selectRaw('
+                bed_types.title AS bedTypeTitle,
+                accommodations.id AS accomId,
+                image, pricePerNight, description, roomNumber, amenities, maxOccupancy, roomSize, isAirconditioned
+
+              ')
+            ->first();
+
+        return view('front.reserve', compact('details'));
+
+    }
+
+
+
+
+    public static function customerReserve(Request $request)
+    {
+        $reserve = new CustomerReservation();
+        $reserve->accommodation_id = $request->accommodation_id;
+        $reserve->customerName = $request->name;
+        $reserve->check_in = $request->checkin;
+        $reserve->check_out = $request->checkout;
+        $reserve->contact = $request->contact;
+        $reserve->email = $request->email;
+        $reserve->save();
+
+        return redirect(route('reserve.success'));
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

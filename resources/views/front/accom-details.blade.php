@@ -137,7 +137,12 @@
                                         <div class="row">
 
                                             <div class="col-md-12 col-sm-9 text-right">
-                                                <button class="btn btn-danger btn-lg">Book now</button>
+                                                <form action="{{ route('reserve.accom', $details->accomId) }}" method="post">
+                                                    @csrf
+
+                                                    <button class="btn btn-danger btn-lg" type="submit">Reserve</button>
+
+                                                </form>
                                             </div>
                                         </div>
                                     </li>

@@ -59,8 +59,14 @@
 
                                </p>
 
-                            <small>
-                                <strong title="Click for more details"><a href="{{ route('view.accommodation', $items->accomId) }}" class="btn btn-outline-primary btn-sm">View more details</a> </strong>
+                            <small class="d-flex align-content-stretch">
+                                <strong title="Click for more details"><a href="{{ route('view.accommodation', $items->accomId) }}" class="btn btn-outline-primary btn-sm btn-block">View more details</a> </strong>
+                                &nbsp;
+                                <form action="{{ route('reserve.accom', $items->accomId) }}" method="post">
+                                    @csrf
+                                    <button class="btn btn-danger btn-sm " type="submit">Reserve</button>
+                                </form>
+
                             </small>
                         </div>
                     </div>

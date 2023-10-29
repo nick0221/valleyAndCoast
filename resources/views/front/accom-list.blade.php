@@ -33,7 +33,7 @@
                             </a>
                             <div class="down-content">
                                 <a href="{{ route('view.accommodation', $item->accomId) }}"><h4>{{ $item->roomNumber }}</h4></a>
-
+                                <h6>Bed Type: {{ $item->bedTypeTitle }}</h6>
                                 <h6> Rate: &#x20B1; {{ number_format($item->pricePerNight) }} <small class="small">per night</small></h6>
 
 
@@ -43,10 +43,15 @@
                                     {{ $item->description }}
                                 </p>
 
-                                </p>
+
                                 <div class="text-right d-flex align-content-around">
                                      <a href="{{ route('view.accommodation', $item->accomId) }}" class="btn btn-link btn-block">View more details</a>
-                                     <button class="btn btn-danger btn-block">Reserve</button>
+
+                                    <form action="{{ route('reserve.accom', $item->accomId) }}" method="post">
+                                        @csrf
+                                        <button class="btn btn-danger btn-block" type="submit">Reserve</button>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
