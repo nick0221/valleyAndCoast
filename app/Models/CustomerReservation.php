@@ -27,6 +27,24 @@ class CustomerReservation extends Model
         return $this->belongsTo(Accommodation::class);
     }
 
+    public function bedTypeTitle($q): string
+    {
+        return BedType::query()->where('id', $q)->first()->title;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

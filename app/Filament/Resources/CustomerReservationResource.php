@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CustomerReservationResource\Pages;
 use App\Filament\Resources\CustomerReservationResource\RelationManagers;
+use App\Models\BedType;
 use App\Models\CustomerReservation;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CustomerReservationResource extends Resource
@@ -21,7 +23,7 @@ class CustomerReservationResource extends Resource
 
     protected static ?string $navigationGroup = 'Customer Inquiries';
 
-    protected static ?string $navigationLabel = 'For reservation';
+    protected static ?string $navigationLabel = 'For Bookings';
 
     public static function form(Form $form): Form
     {
@@ -53,9 +55,16 @@ class CustomerReservationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('accommodation.roomNumber')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')->label('Date')
+                    ->dateTime('M d, Y - h:iA')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('accommodation.roomNumber'),
+
+                Tables\Columns\TextColumn::make('accommodation.bed_type_id')
+                    ->formatStateUsing(fn(CustomerReservation $record) => $record->bedTypeTitle($record->id)),
+
+
 
                 Tables\Columns\TextColumn::make('customerName')
                     ->searchable(),
@@ -88,20 +97,14 @@ class CustomerReservationResource extends Resource
                     })
                     ->alignCenter()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+
+
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\Action::make('accept'),
+                //Tables\Actions\Action::make('accept')->label('Accept'),
             ])
             ->bulkActions([
 //                Tables\Actions\BulkActionGroup::make([
@@ -130,7 +133,7 @@ class CustomerReservationResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $countCust = static::getModel()::count();
+        $countCust = static::getModel()::where('created_at', now())->count();
         return ($countCust == 0 ) ? null: $countCust;
     }
 
