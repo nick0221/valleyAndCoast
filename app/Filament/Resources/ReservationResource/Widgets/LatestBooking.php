@@ -18,14 +18,14 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 
 
-class LatestReservation extends BaseWidget
+class LatestBooking extends BaseWidget
 {
 
 
     public function table(Table $table): Table
     {
         return $table
-            
+
             ->query(ReservationResource::getEloquentQuery()->whereDate('created_at', now()->toDateString()))
             ->defaultPaginationPageOption(5)
             ->defaultSort('created_at', 'desc')

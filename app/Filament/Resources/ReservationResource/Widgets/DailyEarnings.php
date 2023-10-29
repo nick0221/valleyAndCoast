@@ -6,7 +6,7 @@ use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 
-class DailyReservationIncome extends ChartWidget
+class DailyEarnings extends ChartWidget
 {
     protected static ?string $heading = 'Daily Income';
     protected static ?string $description = '7 days running';

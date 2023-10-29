@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CustomerResource\Pages\CreateCustomer;
 use App\Filament\Resources\ReservationResource\Pages;
 use App\Filament\Resources\ReservationResource\RelationManagers;
-use App\Filament\Resources\ReservationResource\Widgets\ReservationOverview;
+use App\Filament\Resources\ReservationResource\Widgets\Overview;
 use App\Models\Accommodation;
 
 use App\Models\BedType;

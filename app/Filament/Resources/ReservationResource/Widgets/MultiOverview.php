@@ -8,10 +8,10 @@ use Kenepa\MultiWidget\MultiWidget;
 class MultiOverview extends MultiWidget
 {
     public array $widgets = [
-        LatestReservation::class,
-        ReservationOverview::class,
-        ReservationChart::class,
-        DailyReservationIncome::class,
+        LatestBooking::class,
+        Overview::class,
+        MonthlyEarnings::class,
+        DailyEarnings::class,
 
     ];
 

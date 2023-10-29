@@ -56,6 +56,7 @@ class CustomerReservationResource extends Resource
                 Tables\Columns\TextColumn::make('accommodation.roomNumber')
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('customerName')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('check_in')
@@ -100,7 +101,7 @@ class CustomerReservationResource extends Resource
                 //
             ])
             ->actions([
-                //Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('accept'),
             ])
             ->bulkActions([
 //                Tables\Actions\BulkActionGroup::make([

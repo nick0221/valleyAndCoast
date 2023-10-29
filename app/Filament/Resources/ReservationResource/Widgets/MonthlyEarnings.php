@@ -6,7 +6,7 @@ use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 
-class ReservationChart extends ChartWidget
+class MonthlyEarnings extends ChartWidget
 {
 
     protected static ?string $heading = "Monthly Earnings";

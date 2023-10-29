@@ -18,7 +18,11 @@ class Inquiry extends Model
     ];
 
 
+    public  function currentlyInquired($query)
+    {
+        return $query->whereDate('created', now()->toDate())->count();
 
+    }
 
 
 

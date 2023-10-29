@@ -6,8 +6,8 @@ use App\Filament\Resources\AccommodationResource;
 use App\Filament\Resources\CustomerResource;
 use App\Filament\Resources\ReservationResource;
 use App\Filament\Resources\ReservationResource\Widgets\MultiOverview;
-use App\Filament\Resources\ReservationResource\Widgets\ReservationChart;
-use App\Filament\Resources\ReservationResource\Widgets\ReservationOverview;
+use App\Filament\Resources\ReservationResource\Widgets\MonthlyEarnings;
+use App\Filament\Resources\ReservationResource\Widgets\Overview;
 use App\Filament\Resources\ReservationResource\Widgets\StatsOverview;
 use App\Filament\Resources\StaffResource;
 use App\Models\Customer;
@@ -41,14 +41,14 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('images/vc-logo.png'))
             ->favicon(asset('images/vc-logo.png'))
             ->sidebarCollapsibleOnDesktop()
-            ->brandName(' V&C HRS')
+            ->brandName('V&C HRS')
             ->default()
             ->passwordReset()
             ->id('admin')
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::hex('#f7b416') ,
+                'primary' => Color::hex('#CD5C08') ,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -61,8 +61,7 @@ class AdminPanelProvider extends PanelProvider
 //                Widgets\AccountWidget::class,
 //                Widgets\FilamentInfoWidget::class,
                 OverlookWidget::class,
-//                ReservationOverview::make(),
-//                ReservationChart::make(),
+
                 MultiOverview::make(),
 
 

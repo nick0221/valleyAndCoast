@@ -29,6 +29,7 @@ class InquiryResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
@@ -49,6 +50,7 @@ class InquiryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'DESC')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->date('M d, Y - h:iA')
@@ -73,9 +75,9 @@ class InquiryResource extends Resource
                 Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+//                Tables\Actions\BulkActionGroup::make([
+//                    Tables\Actions\DeleteBulkAction::make(),
+//                ]),
             ]);
     }
 
@@ -112,8 +114,9 @@ class InquiryResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $countCust = static::getModel()::count();
+        $countCust = static::getModel()::whereDate('created_at', now())->count();
         return ($countCust == 0 ) ? null: $countCust;
+
     }
 
 
