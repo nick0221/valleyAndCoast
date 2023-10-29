@@ -54,6 +54,7 @@ class CustomerReservationResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'Desc')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')->label('Date')
                     ->dateTime('M d, Y - h:iA')
@@ -62,9 +63,8 @@ class CustomerReservationResource extends Resource
                 Tables\Columns\TextColumn::make('accommodation.roomNumber'),
 
                 Tables\Columns\TextColumn::make('accommodation.bed_type_id')
+                    ->label('Bed Type')
                     ->formatStateUsing(fn(CustomerReservation $record) => $record->bedTypeTitle($record->id)),
-
-
 
                 Tables\Columns\TextColumn::make('customerName')
                     ->searchable(),
@@ -133,7 +133,7 @@ class CustomerReservationResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $countCust = static::getModel()::where('created_at', now())->count();
+        $countCust = static::getModel()::whereDate('created_at', now()->toDate())->count();
         return ($countCust == 0 ) ? null: $countCust;
     }
 
