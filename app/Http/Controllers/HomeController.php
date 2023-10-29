@@ -48,7 +48,14 @@ class HomeController extends Controller
               ')
             ->first();
 
-        $amenities = Amenities::whereIn('id', $details->amenities)->get();
+        $countAmenities = (empty($details->amenities)) ? 0 : $details->amenities;
+
+
+        if ($countAmenities > 0){
+            $amenities = Amenities::whereIn('id', )->get();
+        }else{
+            $amenities = [];
+        }
 
 
 

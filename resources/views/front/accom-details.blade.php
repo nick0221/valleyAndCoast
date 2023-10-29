@@ -168,9 +168,12 @@
             <h5>Amenities</h5>
             <p class="">
                 <ul class="text-muted">
-                    @foreach($amenities as $item)
-                        <li> <i class="fa fa-check text-primary"></i> {{ $item->title }}</li>
-                    @endforeach
+
+                    @if(count($amenities) > 0)
+                        @foreach($amenities as $item)
+                            <li> <i class="fa fa-check text-primary"></i> {{ $item->title }}</li>
+                        @endforeach
+                    @endif
                 </ul>
             </p>
 
