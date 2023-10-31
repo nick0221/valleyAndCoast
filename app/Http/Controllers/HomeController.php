@@ -52,7 +52,7 @@ class HomeController extends Controller
 
 
         if ($countAmenities > 0){
-            $amenities = Amenities::whereIn('id', )->get();
+            $amenities = Amenities::whereIn('id', $countAmenities)->get();
         }else{
             $amenities = [];
         }
