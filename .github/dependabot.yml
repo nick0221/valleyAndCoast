@@ -18,16 +18,3 @@ updates:
     pull-request-branch-name:
       separator: "/"
     rebase-strategy: "auto"
-    # Group minor and patch updates
-    groups:
-      security-updates:
-        dependency-types:
-          - "direct"
-          - "indirect"
-        update-types:
-          - "patch"
-          - "minor"
-        patterns:
-          - "guzzlehttp/*"
-          - "laravel/*"
-          - "symfony/*"
